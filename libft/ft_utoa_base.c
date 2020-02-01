@@ -17,6 +17,8 @@ static int ft_max_digits(uint64_t num, int base)
 	int max_digits;
 
 	max_digits = 0;
+	if (num == 0)
+		return (1);
 	while (num)
 	{
 		num /= base;

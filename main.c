@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/01 14:07:20 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/01 19:39:43 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,17 @@ int main() {
 	float	f_x;
 	int ftp;
 	int p;
+	unsigned u_x;
 
-	ll_x = 123123123123123123;
+	ll_x = 9223372036854775807;
 	l_x = 123123123123;
-	i_x = 15;
+	i_x = -42;
 	f_x = 123.123;
-									ft_printf("    ft_printf: ");
+	u_x = 100;
 
-	ftp = ft_printf("\'%#.10X\'\n", i_x);
-
-									printf("ret_ft_printf: %d\n", ftp);
-									printf("       printf: ");
-
-	p = printf("\'%8.5X\'\n", i_x);
-
-									printf("   ret_printf: %d\n", p);
+																		ft_printf("    ft_printf: ");
+	ftp = ft_printf("\'%u\'\n", i_x);									printf("ret_ft_printf: %d\n", ftp - 3);    printf("       printf: ");
+	p   =    printf("\'%u\'\n", i_x);									printf("   ret_printf: %d\n", p - 3);
 	return 0;
 }
+//3.2d
