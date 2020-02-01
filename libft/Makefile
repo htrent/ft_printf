@@ -87,7 +87,9 @@ SOURCES_LIST = ft_atoi.c \
 	   ft_atoi_base.c \
 	   ft_create_elem_gnl.c \
 	   ft_printf.c \
-	   ft_count_of_digits.c
+	   ft_count_of_digits.c \
+	   ft_utoa_base.c \
+	   ft_str_to_upper.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/

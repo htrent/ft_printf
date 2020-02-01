@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htrent <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/03 18:59:41 by htrent            #+#    #+#             */
-/*   Updated: 2020/01/31 19:25:09 by htrent           ###   ########.fr       */
+/*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
+/*   Updated: 2020/02/01 13:28:58 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_count_of_digits(int64_t n)
+char	*ft_str_to_upper(char *str)
 {
 	int i;
+	char c;
 
+	if (!str)
+		return (NULL);
 	i = 0;
-	if (n == 0)
-		return (1);
-	while (n)
+	while (str[i])
 	{
+		c = ft_toupper(str[i]);
+		str[i] = c;
 		i++;
-		n = n / 10;
 	}
-	return (i);
+	return (str);
 }

@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/01/31 21:24:48 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/01 14:07:01 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ typedef	struct		s_printf
 	char			*format;
 	int 			flags;
 	int		 		width;
-	int			precision;
+	int				precision;
 	int 			size;
+	int 			count_char;
 }					t_printf;
 
 # define NO_PRECISION 0
@@ -130,12 +131,14 @@ int	manage_precision(t_printf *data, int *k)
 			data->precision = va_arg(data->params, int);
 			(*k)++;
 		}
-		else
+		else if (ft_isdigit(data->format[*k]))
 		{
 			data->precision = ft_atoi(&(data->format[*k]));
 			while (ft_isdigit(data->format[*k]))
 				(*k)++;
 		}
+		else
+			data->precision = 0;
 	}
 	else
 		data->precision = NO_PRECISION;
@@ -186,9 +189,9 @@ void	ft_fillbegin(t_printf *data, int64_t num, char *s, int digits)
 	prec = data->precision;
 	dig = digits;
 	i = 0;
-	if (data->flags >> TO_SPACE && num >= 0 && (i = 1))
+	if (data->flags >> TO_SPACE == 1 && num >= 0 && (i = 1))
 		s[0] = ' ';
-	if (data->flags >> TO_PLUS && num >= 0 && (i = 1))
+	if (data->flags >> TO_PLUS == 1 && num >= 0 && (i = 1))
 		s[0] = '+';
 	if (num < 0 && (i = 1))
 		s[0] = '-';
@@ -203,25 +206,57 @@ void	ft_fillbegin(t_printf *data, int64_t num, char *s, int digits)
 		s[i++] = (num % ft_pow_10(dig)) / ft_pow_10(dig - 1) + '0';
 		dig--;
 	}
-	j = (data->flags >> TO_PLUS || data->flags >> TO_SPACE || num < 0) ? 1 : 0;
+	j = (data->flags >> TO_PLUS == 1 || data->flags >> TO_SPACE == 1 || num < 0) ? 1 : 0;
 	while (j < data->width - max)
 	{
 		s[i++] = ' ';
 		j++;
 	}
-
-	printf("\'%s\'", s);
-
+	ft_putstr(s);
+	free(s);
 }
-/*
+
 void	ft_fillend(t_printf *data, int64_t num, char *s, int digits)
 {
+	int i;
+	int j;
+	int dig;
+	int prec;
+	int max;
+	int width;
 
-}*/
-/*
- * FILLEND!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
- *
- */
+	width = data->width;
+	prec = data->precision;
+	dig = digits;
+	max = (digits > data->precision) ? digits : data->precision;
+	max += (data->flags >> TO_SPACE == 1 || data->flags >> TO_PLUS == 1 || num < 0) ? 1 : 0;
+	i = 0;
+	while (width > max)
+	{
+		s[i++] = ' ';
+		width--;
+	}
+	if (data->flags >> TO_SPACE == 1 && num >= 0)
+		s[i++] = ' ';
+	if (data->flags >> TO_PLUS == 1 && num >= 0)
+		s[i++] = '+';
+	if (num < 0)
+		s[i++] = '-';
+	while (prec > dig)
+	{
+		s[i++] = '0';
+		prec--;
+	}
+	j = (data->flags >> TO_PLUS == 1 || data->flags >> TO_SPACE == 1 || num < 0) ? 1 : 0;
+	while (dig > 0)
+	{
+		s[i++] = (num % ft_pow_10(dig)) / ft_pow_10(dig - 1) + '0';
+		dig--;
+	}
+	ft_putstr(s);
+	free(s);
+}
+
 int 	put_data_di(t_printf *data, int *k)
 {
 	int64_t num;
@@ -229,7 +264,6 @@ int 	put_data_di(t_printf *data, int *k)
 	int n;
 	int digits;
 
-	(void)*k;
 	if (data->size == L_SIZE)
 		num = (long int)va_arg(data->params, long int);
 	else if (data->size == H_SIZE)
@@ -238,20 +272,89 @@ int 	put_data_di(t_printf *data, int *k)
 		num = (long long)va_arg(data->params, long long);
 	else if (data->size == HH_SIZE)
 		num = (char)va_arg(data->params, int);
-	else if (data->format[*k] == 'd')
-		num = (int)va_arg(data->params, int);
 	else
-		num = (long)va_arg(data->params, long);
+		num = (int)va_arg(data->params, int);
 	digits = ft_count_of_digits(num);
 	n = (digits > data->precision) ? digits : data->precision;
-	if (data->flags >> TO_SPACE || data->flags >> TO_PLUS)
+	if (data->flags >> TO_SPACE == 1 || data->flags >> TO_PLUS == 1)
 		n++;
 	n = (n > data->width) ? n : data->width;
+	data->count_char += n;
 	s = ft_strnew(n);
-	if (data->flags >> TO_MINUS)
+	if (data->flags >> TO_MINUS == 1)
 		ft_fillbegin(data, num, s, digits);
-	///else
-	///	ft_fillend(data, num, s, digits);
+	else
+		ft_fillend(data, num, s, digits);
+	(*k)++;
+	return (0);
+}
+
+int 	put_data_percent(t_printf *data, int *k)
+{
+	if (data->flags >> TO_MINUS)
+	{
+		ft_putchar('%');
+		data->count_char++;
+		while (data->width-- > 1)
+		{
+			ft_putchar(' ');
+			data->count_char++;
+		}
+	}
+	else
+	{
+		while (data->width-- > 1)
+		{
+			ft_putchar(' ');
+			data->count_char++;
+		}
+		ft_putchar('%');
+		data->count_char++;
+	}
+	(*k)++;
+	return (0);
+}
+
+int 	put_data_ouxX(t_printf *data, int *k)
+{
+	uint64_t num;
+	char *s;
+	int n;
+	int digits;
+
+	if (data->size == L_SIZE)
+		num = (unsigned long int)va_arg(data->params, unsigned long int);
+	else if (data->size == H_SIZE)
+		num = (unsigned short)va_arg(data->params, unsigned int);
+	else if (data->size == LL_SIZE)
+		num = (unsigned long long)va_arg(data->params, unsigned long long);
+	else if (data->size == HH_SIZE)
+		num = (unsigned char)va_arg(data->params, unsigned int);
+	else
+		num = (unsigned int)va_arg(data->params, unsigned int);
+
+
+	if (data->format[*k] == 'o')
+		s = ft_utoa_base(num, 8);
+	if (data->format[*k] == 'x' || data->format[*k] == 'X')
+		s = ft_utoa_base(num, 16);
+	digits = ft_strlen(s);
+	if (data->format[*k] == 'X')
+		s = ft_str_to_upper(s);
+	n = (data->precision > )
+	printf("\"%s\"", s);
+	/*digits = ft_count_of_digits(num);
+	n = (digits > data->precision) ? digits : data->precision;
+	if (data->flags >> TO_SPACE == 1 || data->flags >> TO_PLUS == 1)
+		n++;
+	n = (n > data->width) ? n : data->width;
+	data->count_char += n;
+	s = ft_strnew(n);
+	if (data->flags >> TO_MINUS == 1)
+		ft_fillbegin(data, num, s, digits);
+	else
+		ft_fillend(data, num, s, digits);
+	(*k)++;*/
 	return (0);
 }
 
@@ -261,19 +364,32 @@ int 	put_data(t_printf *data, int *k)
 	{
 		if (data->format[*k] == 'd' || data->format[*k] == 'i')
 			put_data_di(data, k);
+		if (ft_strchr("ouxX", data->format[*k]) != NULL)
+			put_data_ouxX(data, k);
 	}
+	if (data->format[*k] == '%')
+		put_data_percent(data, k);
 	return (0);
 }
 
-
-int 	manage_var(t_printf data, int *k) ///add errors if return 1!!!
+int ft_put_percent(t_printf *data)
 {
-	manage_flags(&data, k);
-	manage_width(&data, k);
-	manage_precision(&data, k);
-	manage_size(&data, k);
-	put_data(&data, k);
-	printf("flags:%d width:%d precision:%d size:%d", data.flags, data.width, data.precision, data.size);
+	ft_putchar('%');
+	data->count_char++;
+	return (0);
+}
+
+int 	manage_var(t_printf *data, int *k) ///add errors if return 1!!!
+{
+	if (data->format[*k] == '%' && (*k)++)
+		return (ft_put_percent(data));
+	manage_flags(data, k);
+	manage_width(data, k);
+	if (manage_precision(data, k))
+		return (1);
+	manage_size(data, k);
+	put_data(data, k);
+	//printf("\nflags:%d width:%d precision:%d size:%d \nformat:\"%s\"\n", data->flags, data->width, data->precision, data->size, &data->format[*k]);
 	return (0);
 }
 
@@ -284,6 +400,7 @@ int	ft_printf(const char * restrict format, ...)
 
 	data = *(t_printf *)malloc(sizeof(t_printf));
 	data.format = (char *)format;
+	data.count_char = 0;
 	i = 0;
 	va_start(data.params, format);
 	while (data.format[i])
@@ -291,12 +408,14 @@ int	ft_printf(const char * restrict format, ...)
 		if (data.format[i] == '%')
 		{
 			i++;
-			manage_var(data, &i);
+			manage_var(&data, &i);
 		}
 		else
-			ft_putchar(format[i]);
-		i++;
+		{
+			data.count_char++;
+			ft_putchar(format[i++]);
+		}
 	}
 	va_end(data.params);
-	return (0);
+	return (data.count_char);
 }

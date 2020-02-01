@@ -114,5 +114,7 @@ void					ft_print_list(t_gnl_list *list);
 t_list					*ft_create_node(char *content, size_t content_size);
 t_gnl_list				*ft_create_elem_gnl(char data, int fd);
 int						get_next_line(const int fd, char **line);
-int						ft_count_of_digits(int n);
+int						ft_count_of_digits(int64_t n);
+char 					*ft_utoa_base(uint64_t num, int base);
+char					*ft_str_to_upper(char *str);
 #endif
