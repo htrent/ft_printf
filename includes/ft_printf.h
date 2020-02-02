@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/02 12:56:07 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/02 14:18:32 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <stdarg.h>
-
+//////////////////////
+#include <stdio.h> //////DELETE!!!!!!!!!!!
+//////////////////////
 # define NO_PRECISION -1
 
 # define NO_FLAGS	0  //00000
@@ -72,8 +74,9 @@ char					*ft_itoa(int n);
 void					ft_putchar(char c);
 void					ft_putstr(char const *s);
 void					ft_putnbr(int n);
-int						ft_count_of_digits(int64_t n);
-char 					*ft_utoa_base(uint64_t num, int base);
+int						ft_count_of_digits(intmax_t n);
+int						ft_count_of_digits_u(uintmax_t n);
+char 					*ft_utoa_base(uintmax_t num, int base);
 char					*ft_str_to_upper(char *str);
 
 int						put_data(t_printf *data, int *k);
@@ -84,16 +87,22 @@ char					*ft_fillend_oxX(t_printf *data, char *str, char *num, int *k);
 int						put_data_zero(t_printf *data, int *k);
 int						ft_put_percent(t_printf *data);
 int						put_data_percent(t_printf *data, int *k);
-void					ft_fillbegin(t_printf *data, int64_t num, char *s, int digits);
-void					ft_fillend(t_printf *data, int64_t num, char *s, int digits);
+void					ft_fillbegin(t_printf *data, intmax_t num, char *s, int digits);
+void					ft_fillend(t_printf *data, intmax_t num, char *s, int digits);
 int						put_data_di(t_printf *data, int *k);
 int						manage_width(t_printf *data, int *k);
 int						manage_precision(t_printf *data, int *k);
 int						manage_size(t_printf *data, int *k);
 void					solve_flags(t_printf *data, int *k);
 void					manage_flags(t_printf *data, int *k);
-int64_t					max(int64_t a, int64_t b);
-int64_t					ft_pow_10(int n);
+intmax_t				max(intmax_t a, intmax_t b);
+intmax_t				ft_pow_10(int n);
+uintmax_t				ft_pow_10_u(int n);
 int						ft_is_flag(char c);
 int						ft_is_size(char c);
+int						put_data_u(t_printf *data, int *k, uintmax_t num);
+void					ft_fillbegin_u(t_printf *data, uintmax_t num, char *s, int digits);
+void					ft_fillend_u(t_printf *data, intmax_t num, char *s, int digits);
+int 					put_data_p(t_printf *data, int *k);
+char 					*ft_utoa_base_p(uintmax_t num, int base, t_printf *data);
 #endif

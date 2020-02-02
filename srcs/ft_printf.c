@@ -6,24 +6,26 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/01 19:39:29 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/02 14:55:33 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
+
 
 int 	put_data(t_printf *data, int *k)
 {
-	if (ft_strchr("diouxX", data->format[*k]) != NULL)
+	if (ft_strchr("pdiouxX%", data->format[*k]) != NULL)
 	{
 		if (data->format[*k] == 'd' || data->format[*k] == 'i')
 			put_data_di(data, k);
 		else if (ft_strchr("ouxX", data->format[*k]) != NULL)
 			put_data_ouxX(data, k);
+		else if (data->format[*k] == 'p')
+			put_data_p(data, k);
+		else if (data->format[*k] == '%')
+				put_data_percent(data, k);
 	}
-	if (data->format[*k] == '%')
-		put_data_percent(data, k);
 	return (0);
 }
 
@@ -36,7 +38,8 @@ int 	manage_var(t_printf *data, int *k) ///add errors if return 1!!!
 	if (manage_precision(data, k))
 		return (1);
 	manage_size(data, k);
-	put_data(data, k);
+	if (!put_data(data, k))
+		return (0);
 	//printf("\nflags:%d width:%d precision:%d size:%d \nformat:\"%s\"\n", data->flags, data->width, data->precision, data->size, &data->format[*k]);
 	return (0);
 }
@@ -61,9 +64,10 @@ int	ft_printf(const char *format, ...)
 		else
 		{
 			data.count_char++;
-			ft_putchar(format[i++]);
+			ft_putchar(format[i]);
+			i++;
 		}
-
+//		i++;
 	}
 	va_end(data.params);
 	return (data.count_char);

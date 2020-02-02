@@ -21,6 +21,11 @@ int	manage_width(t_printf *data, int *k)
 		if (data->format[*k] == '*')
 		{
 			data->width = va_arg(data->params, int);
+			if (data->width < 0)
+			{
+				data->width *= -1;
+				data->flags += F_MINUS;
+			}
 			(*k)++;
 		}
 		else

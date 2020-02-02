@@ -6,15 +6,16 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/02 12:44:26 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/02 15:00:28 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <limits.h>
 
 int 	put_data_di(t_printf *data, int *k)
 {
-	int64_t num;
+	intmax_t num;
 	char *s;
 	int n;
 	int digits;
@@ -28,8 +29,17 @@ int 	put_data_di(t_printf *data, int *k)
 	else if (data->size == HH_SIZE)
 		num = (char)va_arg(data->params, int);
 	else
-	num = (int)va_arg(data->params, int);
+		num = (int)va_arg(data->params, int);
+	if (num == LONG_MIN || num == LLONG_MIN)
+	{
+		ft_putstr("-9223372036854775808");
+		data->count_char += 20;
+		(*k)++;
+		return (0);
+	}
 	digits = ft_count_of_digits(num);
+	if (data->precision == 0 && num == 0)
+		digits = 0;
 	n = (digits > data->precision) ? digits : data->precision;
 	if ((data->flags >> TO_SPACE) % 2 || (data->flags >> TO_PLUS) % 2 || num < 0)
 		n++;
@@ -44,7 +54,7 @@ int 	put_data_di(t_printf *data, int *k)
 	return (0);
 }
 
-void	ft_fillbegin(t_printf *data, int64_t num, char *s, int digits)
+void	ft_fillbegin(t_printf *data, intmax_t num, char *s, int digits)
 {
 	int i;
 	int j;
@@ -67,11 +77,12 @@ void	ft_fillbegin(t_printf *data, int64_t num, char *s, int digits)
 		s[i++] = '0';
 		prec--;
 	}
-	while (dig > 0)
-	{
-		s[i++] = (num % ft_pow_10(dig)) / ft_pow_10(dig - 1) + '0';
-		dig--;
-	}
+	if (!(data->precision == 0 && num == 0))
+		while (dig > 0)
+		{
+			s[i++] = (num % ft_pow_10(dig)) / ft_pow_10(dig - 1) + '0';
+			dig--;
+		}
 	j = ((data->flags >> TO_PLUS) % 2 == 1 || (data->flags >> TO_SPACE) % 2 == 1 || num < 0) ? 1 : 0;
 	while (j < data->width - max)
 	{
@@ -82,7 +93,7 @@ void	ft_fillbegin(t_printf *data, int64_t num, char *s, int digits)
 	free(s);
 }
 
-void	ft_fillend(t_printf *data, int64_t num, char *s, int digits)
+void	ft_fillend(t_printf *data, intmax_t num, char *s, int digits)
 {
 	int i;
 	int j;
@@ -143,11 +154,12 @@ void	ft_fillend(t_printf *data, int64_t num, char *s, int digits)
 		prec--;
 	}
 	j = ((data->flags >> TO_PLUS) % 2 || (data->flags >> TO_SPACE) % 2 || num < 0) ? 1 : 0;
-	while (dig > 0)
-	{
-		s[i++] = (dig == 19) ? (num / ft_pow_10(dig - 1) + '0') : ((num % ft_pow_10(dig)) / ft_pow_10(dig - 1) + '0');
-		dig--;
-	}
+	if (!(data->precision == 0 && num == 0))
+		while (dig > 0)
+		{
+			s[i++] = (dig == 19) ? (num / ft_pow_10(dig - 1) + '0') : ((num % ft_pow_10(dig)) / ft_pow_10(dig - 1) + '0');
+			dig--;
+		}
 	ft_putstr(s);
 	free(s);
 }

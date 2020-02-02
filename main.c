@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/02 12:21:46 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/02 16:20:23 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,21 @@ int main() {
 	long l_x;
 	long long ll_x;
 	float	f_x;
+	unsigned long u_x;
 	int ftp;
 	int p;
+	long long *ll_p;
+	int *i_p;
 
+	ll_p = &ll_x;
+	i_p = &i_x;
 	ll_x = 123123123123123123;
 	l_x = 123123123123;
-	i_x = 15;
+	i_x = 100;
 	f_x = 123.123;
-									ft_printf("    ft_printf: ");
-
-	ftp = ft_printf("\'%#.10X\'\n", i_x);
-
-									printf("ret_ft_printf: %d\n", ftp);
-									printf("       printf: ");
-
-	p = printf("\'%8.5X\'\n", i_x);
-
-									printf("   ret_printf: %d\n", p);
+	u_x = -42;
+																							ft_printf("    ft_printf: ");
+	ftp = ft_printf("\'%#.3x\'\n", 1);														printf("ret_ft_printf: %d\n", ftp - 3);printf("       printf: ");
+	p =      printf("\'%#.3x\'\n", 1);														printf("   ret_printf: %d\n", p - 3);
 	return 0;
 }

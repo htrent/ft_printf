@@ -12,14 +12,29 @@
 
 #include "ft_printf.h"
 
-int64_t max(int64_t a, int64_t b)
+intmax_t max(intmax_t a, intmax_t b)
 {
 	if (a > b)
 		return (a);
 	return (b);
 }
 
-int64_t	ft_pow_10(int n)
+intmax_t	ft_pow_10(int n)
+{
+	int i;
+	int64_t num;
+
+	num = 1;
+	i = 0;
+	while (i < n)
+	{
+		num *= 10;
+		i++;
+	}
+	return (num);
+}
+
+uintmax_t	ft_pow_10_u(int n)
 {
 	int i;
 	int64_t num;

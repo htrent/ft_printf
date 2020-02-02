@@ -12,7 +12,22 @@
 
 #include "ft_printf.h"
 
-int	ft_count_of_digits(int64_t n)
+int	ft_count_of_digits(intmax_t n)
+{
+	int i;
+
+	i = 0;
+	if (n == 0)
+		return (1);
+	while (n)
+	{
+		i++;
+		n = n / 10;
+	}
+	return (i);
+}
+
+int	ft_count_of_digits_u(uintmax_t n)
 {
 	int i;
 
