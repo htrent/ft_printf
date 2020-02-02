@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/02 16:20:23 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/02 18:34:40 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int main() {
 	f_x = 123.123;
 	u_x = -42;
 																							ft_printf("    ft_printf: ");
-	ftp = ft_printf("\'%#.3x\'\n", 1);														printf("ret_ft_printf: %d\n", ftp - 3);printf("       printf: ");
-	p =      printf("\'%#.3x\'\n", 1);														printf("   ret_printf: %d\n", p - 3);
+	ftp = ft_printf("\'%c\'\n", 0);														printf("ret_ft_printf: %d\n", ftp - 3);printf("       printf: ");
+	p =      printf("\'%c\'\n", 0);														printf("   ret_printf: %d\n", p - 3);
 	return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/02 14:18:32 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/02 17:47:27 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <fcntl.h>
 # include <sys/types.h>
 # include <stdarg.h>
+# include <wchar.h>
 //////////////////////
 #include <stdio.h> //////DELETE!!!!!!!!!!!
 //////////////////////
@@ -82,8 +83,8 @@ char					*ft_str_to_upper(char *str);
 int						put_data(t_printf *data, int *k);
 int						manage_var(t_printf *data, int *k);
 int 					put_data_ouxX(t_printf *data, int *k);
-char					*ft_fillbegin_oxX(t_printf *data, char *str, char *num, int *k);
-char					*ft_fillend_oxX(t_printf *data, char *str, char *num, int *k);
+char					*ft_fillbegin_xX(t_printf *data, char *str, char *num);
+char					*ft_fillend_xX(t_printf *data, char *str, char *num);
 int						put_data_zero(t_printf *data, int *k);
 int						ft_put_percent(t_printf *data);
 int						put_data_percent(t_printf *data, int *k);
@@ -105,4 +106,10 @@ void					ft_fillbegin_u(t_printf *data, uintmax_t num, char *s, int digits);
 void					ft_fillend_u(t_printf *data, intmax_t num, char *s, int digits);
 int 					put_data_p(t_printf *data, int *k);
 char 					*ft_utoa_base_p(uintmax_t num, int base, t_printf *data);
+int 					put_data_o(t_printf *data, int *k, uintmax_t num);
+char 					*ft_fillbegin_o(t_printf *data, char *str, char *num);
+char 					*ft_fillend_o(t_printf *data, char *str, char *num);
+int 					put_data_c(t_printf *data, int *k);
+int						put_data_zero_c(t_printf *data, int *k);
+int 					put_data_s(t_printf *data, int *k);
 #endif

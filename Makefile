@@ -39,13 +39,17 @@ SOURCES_LIST = ft_atoi.c \
 	   ft_count_of_digits.c \
 	   ft_utoa_base.c \
 	   ft_str_to_upper.c \
-	   put_ouxX.c \
+	   put_xX.c \
 	   put_percent.c \
 	   put_di.c \
 	   width_prec_size.c \
 	   flags.c \
 	   utils.c \
-	   put_p.c
+	   put_p.c \
+	   put_u.c \
+	   put_o.c \
+	   put_c.c \
+	   put_s.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/

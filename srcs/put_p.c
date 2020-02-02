@@ -14,7 +14,7 @@
 
 int put_data_p(t_printf *data, int *k)
 {
-	uint64_t num;
+	uintmax_t num;
 	char *s;
 	char *str;
 	int max;
