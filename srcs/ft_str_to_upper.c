@@ -6,36 +6,25 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/02 12:21:46 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/01 13:28:58 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
-#include <stdio.h>
-#include <limits.h>
-#include <float.h>
+#include "ft_printf.h"
 
-int main() {
-	int i_x;
-	long l_x;
-	long long ll_x;
-	float	f_x;
-	int ftp;
-	int p;
+char	*ft_str_to_upper(char *str)
+{
+	int i;
+	char c;
 
-	ll_x = 123123123123123123;
-	l_x = 123123123123;
-	i_x = 15;
-	f_x = 123.123;
-									ft_printf("    ft_printf: ");
-
-	ftp = ft_printf("\'%#.10X\'\n", i_x);
-
-									printf("ret_ft_printf: %d\n", ftp);
-									printf("       printf: ");
-
-	p = printf("\'%8.5X\'\n", i_x);
-
-									printf("   ret_printf: %d\n", p);
-	return 0;
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (str[i])
+	{
+		c = ft_toupper(str[i]);
+		str[i] = c;
+		i++;
+	}
+	return (str);
 }

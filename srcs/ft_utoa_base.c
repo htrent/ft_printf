@@ -10,32 +10,38 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
-#include <stdio.h>
-#include <limits.h>
-#include <float.h>
+#include "ft_printf.h"
 
-int main() {
-	int i_x;
-	long l_x;
-	long long ll_x;
-	float	f_x;
-	int ftp;
-	int p;
+static int ft_max_digits(uint64_t num, int base)
+{
+	int max_digits;
 
-	ll_x = 123123123123123123;
-	l_x = 123123123123;
-	i_x = 15;
-	f_x = 123.123;
-									ft_printf("    ft_printf: ");
-
-	ftp = ft_printf("\'%#.10X\'\n", i_x);
-
-									printf("ret_ft_printf: %d\n", ftp);
-									printf("       printf: ");
-
-	p = printf("\'%8.5X\'\n", i_x);
-
-									printf("   ret_printf: %d\n", p);
-	return 0;
+	max_digits = 0;
+	while (num)
+	{
+		num /= base;
+		max_digits++;
+	}
+	return (max_digits);
 }
+
+char *ft_utoa_base(uint64_t num, int base)
+{
+	int max_digits;
+	char *str;
+	char *radix;
+	int i;
+
+	radix = "0123456789abcdef";
+	max_digits = ft_max_digits(num, base);
+	str = ft_strnew(max_digits);
+	i = max_digits - 1;
+	while (i >= 0)
+	{
+		str[i] = radix[num % base];
+		num /= base;
+		i--;
+	}
+	return (str);
+}
+

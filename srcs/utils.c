@@ -6,36 +6,44 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/02 12:21:46 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/02 12:55:44 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
-#include <stdio.h>
-#include <limits.h>
-#include <float.h>
+#include "ft_printf.h"
 
-int main() {
-	int i_x;
-	long l_x;
-	long long ll_x;
-	float	f_x;
-	int ftp;
-	int p;
+int64_t max(int64_t a, int64_t b)
+{
+	if (a > b)
+		return (a);
+	return (b);
+}
 
-	ll_x = 123123123123123123;
-	l_x = 123123123123;
-	i_x = 15;
-	f_x = 123.123;
-									ft_printf("    ft_printf: ");
+int64_t	ft_pow_10(int n)
+{
+	int i;
+	int64_t num;
 
-	ftp = ft_printf("\'%#.10X\'\n", i_x);
+	num = 1;
+	i = 0;
+	while (i < n)
+	{
+		num *= 10;
+		i++;
+	}
+	return (num);
+}
 
-									printf("ret_ft_printf: %d\n", ftp);
-									printf("       printf: ");
+int 	ft_is_flag(char c)
+{
+	if (ft_strchr("#0+- ", c) != NULL)
+		return (1);
+	return (0);
+}
 
-	p = printf("\'%8.5X\'\n", i_x);
-
-									printf("   ret_printf: %d\n", p);
-	return 0;
+int 	ft_is_size(char c)
+{
+	if ((c == 'l') || (*(&c + 1) && c == 'l' && *(&c + 1) == 'l') || (c == 'h') || (*(&c + 1) && c == 'h' && *(&c + 1) == 'h') || (c == 'L'))
+		return (1);
+	return (0);
 }

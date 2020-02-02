@@ -1,0 +1,70 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
+/*   Updated: 2020/02/01 19:39:29 by htrent           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "ft_printf.h"
+#include <stdio.h>
+
+int 	put_data(t_printf *data, int *k)
+{
+	if (ft_strchr("diouxX", data->format[*k]) != NULL)
+	{
+		if (data->format[*k] == 'd' || data->format[*k] == 'i')
+			put_data_di(data, k);
+		else if (ft_strchr("ouxX", data->format[*k]) != NULL)
+			put_data_ouxX(data, k);
+	}
+	if (data->format[*k] == '%')
+		put_data_percent(data, k);
+	return (0);
+}
+
+int 	manage_var(t_printf *data, int *k) ///add errors if return 1!!!
+{
+	if (data->format[*k] == '%' && (*k)++)
+		return (ft_put_percent(data));
+	manage_flags(data, k);
+	manage_width(data, k);
+	if (manage_precision(data, k))
+		return (1);
+	manage_size(data, k);
+	put_data(data, k);
+	//printf("\nflags:%d width:%d precision:%d size:%d \nformat:\"%s\"\n", data->flags, data->width, data->precision, data->size, &data->format[*k]);
+	return (0);
+}
+
+int	ft_printf(const char *format, ...)
+{
+	t_printf	data;
+	int i;
+
+	data = *(t_printf *)malloc(sizeof(t_printf));
+	data.format = (char *)format;
+	data.count_char = 0;
+	i = 0;
+	va_start(data.params, format);
+	while (data.format[i])
+	{
+		if (data.format[i] == '%')
+		{
+			i++;
+			manage_var(&data, &i);
+		}
+		else
+		{
+			data.count_char++;
+			ft_putchar(format[i++]);
+		}
+
+	}
+	va_end(data.params);
+	return (data.count_char);
+}

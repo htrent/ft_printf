@@ -10,32 +10,33 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
-#include <stdio.h>
-#include <limits.h>
-#include <float.h>
+#include "ft_printf.h"
 
-int main() {
-	int i_x;
-	long l_x;
-	long long ll_x;
-	float	f_x;
-	int ftp;
-	int p;
-
-	ll_x = 123123123123123123;
-	l_x = 123123123123;
-	i_x = 15;
-	f_x = 123.123;
-									ft_printf("    ft_printf: ");
-
-	ftp = ft_printf("\'%#.10X\'\n", i_x);
-
-									printf("ret_ft_printf: %d\n", ftp);
-									printf("       printf: ");
-
-	p = printf("\'%8.5X\'\n", i_x);
-
-									printf("   ret_printf: %d\n", p);
-	return 0;
+void	solve_flags(t_printf *data, int *k)
+{
+	if (ft_strchr("#0+- ", data->format[*k]) != NULL)
+	{
+		while (ft_is_flag(data->format[*k]))
+		{
+			if (data->format[*k] == ' ' && data->flags >> TO_SPACE == 0)
+				data->flags += F_SPACE;
+			if (data->format[*k] == '#' && data->flags >> TO_SHARP == 0)
+				data->flags += F_SHARP;
+			if (data->format[*k] == '+' && data->flags >> TO_PLUS == 0)
+				data->flags += F_PLUS;
+			if (data->format[*k] == '-' && data->flags >> TO_MINUS == 0)
+				data->flags += F_MINUS;
+			if (data->format[*k] == '0' && data->flags >> TO_ZERO == 0)
+				data->flags += F_ZERO;
+			(*k)++;
+		}
+	}
 }
+
+void	manage_flags(t_printf *data, int *k)
+{
+
+	data->flags = NO_FLAGS;
+	solve_flags(data, k);
+}
+

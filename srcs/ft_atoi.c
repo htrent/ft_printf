@@ -6,36 +6,49 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/02 12:21:46 by htrent           ###   ########.fr       */
+/*   Updated: 2019/09/08 16:20:02 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
-#include <stdio.h>
-#include <limits.h>
-#include <float.h>
+#include "ft_printf.h"
 
-int main() {
-	int i_x;
-	long l_x;
-	long long ll_x;
-	float	f_x;
-	int ftp;
-	int p;
+static const char	*trimmer(const char *str)
+{
+	while (*str == ' ' || *str == '\t' || *str == '\v' || *str == '\n'
+	|| *str == '\r' || *str == '\f')
+		str++;
+	return (str);
+}
 
-	ll_x = 123123123123123123;
-	l_x = 123123123123;
-	i_x = 15;
-	f_x = 123.123;
-									ft_printf("    ft_printf: ");
+static int			check(const char *str)
+{
+	if (*str == '-' && *(str + 1) >= '0' && *(str + 1) <= '9')
+		return (-1);
+	return (1);
+}
 
-	ftp = ft_printf("\'%#.10X\'\n", i_x);
+int					ft_atoi(const char *str)
+{
+	const char	*buf;
+	long int	res;
+	int			ch;
 
-									printf("ret_ft_printf: %d\n", ftp);
-									printf("       printf: ");
-
-	p = printf("\'%8.5X\'\n", i_x);
-
-									printf("   ret_printf: %d\n", p);
-	return 0;
+	buf = trimmer(str);
+	res = 0;
+	ch = check(buf);
+	if (*buf == '+' || *buf == '-')
+		buf++;
+	while (*buf >= '0' && *buf <= '9')
+	{
+		if (res * 10 + *buf - '0' < res)
+		{
+			if (ch == -1)
+				return (0);
+			else
+				return (-1);
+		}
+		res = res * 10 + *buf - '0';
+		buf++;
+	}
+	return (res * ch);
 }
