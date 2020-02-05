@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/02 17:47:27 by htrent           ###   ########.fr       */
+/*   Created: 2020/02/04 11:53:54 by htrent            #+#    #+#             */
+/*   Updated: 2020/02/05 14:35:34 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,14 @@
 # define LL_SIZE		3
 # define HH_SIZE		4
 # define L_UPPER_SIZE	5
+# define J_SIZE			6
+# define Z_SIZE			7
+# define T_SIZE			8
 
-# define MAX(a, b) (a > b) ? a : b
+# define BUFF_SIZE		1000
+
+# define NUM_SIZE		4940
+# define POW_5_27	7450580596923828125
 
 typedef	struct		s_printf
 {
@@ -56,6 +62,7 @@ typedef	struct		s_printf
 	int				precision;
 	int 			size;
 	int 			count_char;
+	char			buf[BUFF_SIZE + 1];
 }					t_printf;
 
 
@@ -74,12 +81,17 @@ char					*ft_strjoin(char const *s1, char const *s2);
 char					*ft_itoa(int n);
 void					ft_putchar(char c);
 void					ft_putstr(char const *s);
-void					ft_putnbr(int n);
 int						ft_count_of_digits(intmax_t n);
 int						ft_count_of_digits_u(uintmax_t n);
 char 					*ft_utoa_base(uintmax_t num, int base);
 char					*ft_str_to_upper(char *str);
+void					ft_bzero(void *s, size_t n);
+void					*ft_memset(void *b, int c, size_t len);
 
+void	ft_putstr_buf(char *str, char buf[BUFF_SIZE + 1]);
+void	ft_putchar_buf(char c, char buf[BUFF_SIZE + 1]);
+
+t_printf				*init_data(const char *format);
 int						put_data(t_printf *data, int *k);
 int						manage_var(t_printf *data, int *k);
 int 					put_data_ouxX(t_printf *data, int *k);
@@ -87,15 +99,14 @@ char					*ft_fillbegin_xX(t_printf *data, char *str, char *num);
 char					*ft_fillend_xX(t_printf *data, char *str, char *num);
 int						put_data_zero(t_printf *data, int *k);
 int						ft_put_percent(t_printf *data);
-int						put_data_percent(t_printf *data, int *k);
+int						put_data_exception(t_printf *data, int *k);
 void					ft_fillbegin(t_printf *data, intmax_t num, char *s, int digits);
 void					ft_fillend(t_printf *data, intmax_t num, char *s, int digits);
 int						put_data_di(t_printf *data, int *k);
 int						manage_width(t_printf *data, int *k);
 int						manage_precision(t_printf *data, int *k);
 int						manage_size(t_printf *data, int *k);
-void					solve_flags(t_printf *data, int *k);
-void					manage_flags(t_printf *data, int *k);
+int 					manage_flags(t_printf *data, int *k);
 intmax_t				max(intmax_t a, intmax_t b);
 intmax_t				ft_pow_10(int n);
 uintmax_t				ft_pow_10_u(int n);
@@ -112,4 +123,5 @@ char 					*ft_fillend_o(t_printf *data, char *str, char *num);
 int 					put_data_c(t_printf *data, int *k);
 int						put_data_zero_c(t_printf *data, int *k);
 int 					put_data_s(t_printf *data, int *k);
+int 					put_data_f(t_printf *data, int *k);
 #endif

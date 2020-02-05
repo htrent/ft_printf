@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   bzero.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/06 13:13:48 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/03 16:49:58 by htrent           ###   ########.fr       */
+/*   Created: 2019/09/05 13:30:18 by htrent            #+#    #+#             */
+/*   Updated: 2020/02/03 14:25:20 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ft_strchr(const char *s, int c)
+void	ft_bzero(void *s, size_t n)
 {
-	const char *buf;
+	void	*begin;
 
-	buf = s;
-	while (buf && *buf && *s)
-	{
-		if (*buf == (unsigned char)c)
-			return ((char *)(buf));
-		buf++;
-	}
-	if (c == 0)
-		return ((char *)(buf));
-	return (NULL);
+	begin = s;
+	while (n--)
+		*(char *)s++ = 0;
+	s = begin;
 }
+

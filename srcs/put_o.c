@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   put_o.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/02 17:21:33 by htrent           ###   ########.fr       */
+/*   Created: 2020/02/04 11:54:14 by htrent            #+#    #+#             */
+/*   Updated: 2020/02/04 11:54:14 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "ft_printf.h"
 
@@ -32,7 +33,7 @@ int 	put_data_o(t_printf *data, int *k, uintmax_t num)
 	data->count_char += max;
 	str = ((data->flags >> TO_MINUS) % 2) ? ft_fillbegin_o(data, str, s) : ft_fillend_o(data, str, s);
 	(*k)++;
-	ft_putstr(str);
+	ft_putstr_buf(str, data->buf);
 	free(str);
 	free(s);
 	return (0);

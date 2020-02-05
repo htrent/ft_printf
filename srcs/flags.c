@@ -1,19 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   flags.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/02 12:21:46 by htrent           ###   ########.fr       */
+/*   Created: 2020/02/04 11:54:03 by htrent            #+#    #+#             */
+/*   Updated: 2020/02/04 12:13:27 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	solve_flags(t_printf *data, int *k)
+int	manage_flags(t_printf *data, int *k)
 {
+	if (data->flags == 32)
+		data->flags = NO_FLAGS;
 	if (ft_strchr("#0+- ", data->format[*k]) != NULL)
 	{
 		while (ft_is_flag(data->format[*k]))
@@ -30,13 +32,8 @@ void	solve_flags(t_printf *data, int *k)
 				data->flags += F_ZERO;
 			(*k)++;
 		}
+		return (0);
 	}
-}
-
-void	manage_flags(t_printf *data, int *k)
-{
-
-	data->flags = NO_FLAGS;
-	solve_flags(data, k);
+	return (1);
 }
 

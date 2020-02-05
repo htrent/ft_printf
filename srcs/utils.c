@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/02 12:55:44 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/03 14:31:56 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,55 @@ uintmax_t	ft_pow_10_u(int n)
 
 int 	ft_is_flag(char c)
 {
-	if (ft_strchr("#0+- ", c) != NULL)
+	if (ft_strchr("#0+- ", c) != NULL && c != '\0')
 		return (1);
 	return (0);
 }
 
 int 	ft_is_size(char c)
 {
-	if ((c == 'l') || (*(&c + 1) && c == 'l' && *(&c + 1) == 'l') || (c == 'h') || (*(&c + 1) && c == 'h' && *(&c + 1) == 'h') || (c == 'L'))
+	if ((c == 'l') || (*(&c + 1) && c == 'l' && *(&c + 1) == 'l') || (c == 'h') || (*(&c + 1) && c == 'h' && *(&c + 1) == 'h') || (c == 'L') || (c == 'j') || (c == 'z'))
 		return (1);
 	return (0);
 }
+
+void	ft_putchar_buf(char c, char buf[BUFF_SIZE + 1])
+{
+	int i;
+
+	i = 0;
+	while (buf[i] != '\0' && i < BUFF_SIZE)
+		i++;
+	if (i == BUFF_SIZE + 1)
+	{
+		ft_putstr(buf);
+		ft_bzero(buf, BUFF_SIZE);
+		i = 0;
+	}
+	buf[i] = c;
+}
+
+void	ft_putstr_buf(char *str, char buf[BUFF_SIZE + 1])
+{
+	int i;
+
+	i = 0;
+	while (buf[i] != '\0' && i < BUFF_SIZE)
+		i++;
+	while (*str)
+	{
+		while (i < BUFF_SIZE && *str)
+		{
+			buf[i] = *str;
+			str++;
+			i++;
+		}
+		if (i == BUFF_SIZE + 1)
+		{
+			ft_putstr(buf);
+			ft_bzero(buf, BUFF_SIZE);
+			i = 0;
+		}
+	}
+}
+

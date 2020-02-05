@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/06 13:13:48 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/03 16:49:58 by htrent           ###   ########.fr       */
+/*   Created: 2019/09/05 12:41:01 by htrent            #+#    #+#             */
+/*   Updated: 2019/09/08 16:20:02 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-char	*ft_strchr(const char *s, int c)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	const char *buf;
+	void *ret;
 
-	buf = s;
-	while (buf && *buf && *s)
-	{
-		if (*buf == (unsigned char)c)
-			return ((char *)(buf));
-		buf++;
-	}
-	if (c == 0)
-		return ((char *)(buf));
-	return (NULL);
+	ret = b;
+	while (len--)
+		*(char *)b++ = (unsigned char)c;
+	return (ret);
 }
+
+

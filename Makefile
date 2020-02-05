@@ -26,7 +26,6 @@ SOURCES_LIST = ft_atoi.c \
 	   ft_itoa.c \
 	   ft_istrchr.c \
 	   ft_putchar.c \
-	   ft_putnbr.c \
 	   ft_putstr.c \
 	   ft_strchr.c \
 	   ft_strdup.c \
@@ -35,13 +34,15 @@ SOURCES_LIST = ft_atoi.c \
 	   ft_strnew.c \
 	   ft_toupper.c \
 	   ft_atoi_base.c \
+	   ft_bzero.c \
 	   ft_printf.c \
 	   ft_count_of_digits.c \
 	   ft_utoa_base.c \
 	   ft_str_to_upper.c \
 	   put_xX.c \
-	   put_percent.c \
+	   put_exception.c \
 	   put_di.c \
+	   ft_memset.c \
 	   width_prec_size.c \
 	   flags.c \
 	   utils.c \
@@ -49,7 +50,8 @@ SOURCES_LIST = ft_atoi.c \
 	   put_u.c \
 	   put_o.c \
 	   put_c.c \
-	   put_s.c
+	   put_s.c \
+	   put_f.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/

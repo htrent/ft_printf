@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   put_di.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/02 15:00:28 by htrent           ###   ########.fr       */
+/*   Created: 2020/02/04 11:53:46 by htrent            #+#    #+#             */
+/*   Updated: 2020/02/04 13:55:53 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,22 @@ int 	put_data_di(t_printf *data, int *k)
 	int digits;
 
 	if (data->size == L_SIZE)
-		num = (long int)va_arg(data->params, long int);
+		num = (long int) va_arg(data->params, long int);
 	else if (data->size == H_SIZE)
-		num = (short)va_arg(data->params, int);
+		num = (short) va_arg(data->params, int);
 	else if (data->size == LL_SIZE)
-		num = (long long)va_arg(data->params, long long);
+		num = (long long) va_arg(data->params, long long);
 	else if (data->size == HH_SIZE)
-		num = (char)va_arg(data->params, int);
+		num = (char) va_arg(data->params, int);
+	else if (data->size == J_SIZE)
+		num = (intmax_t) va_arg(data->params, intmax_t);
+	else if (data->size == Z_SIZE)
+		num = (size_t) va_arg(data->params, size_t);
 	else
-		num = (int)va_arg(data->params, int);
+		num = (int) va_arg(data->params, int);
 	if (num == LONG_MIN || num == LLONG_MIN)
 	{
-		ft_putstr("-9223372036854775808");
+		ft_putstr_buf("-9223372036854775808", data->buf);
 		data->count_char += 20;
 		(*k)++;
 		return (0);
@@ -70,13 +74,19 @@ void	ft_fillbegin(t_printf *data, intmax_t num, char *s, int digits)
 		s[0] = ' ';
 	if ((data->flags >> TO_PLUS) % 2 && num >= 0 && (i = 1))
 		s[0] = '+';
-	if (num < 0 && (i = 1) && (num *= -1) && (max++))
+	if (num < 0 && (i = 1) && (num *= -1)/*&& (max++)*/)
+	{
+		if ((data->flags >> TO_PLUS) % 2 == 0)
+			max++;
 		s[0] = '-';
+	}
 	while (prec > digits)
 	{
 		s[i++] = '0';
 		prec--;
 	}
+	////if (num < 0 && *num *= -1)
+	//	max--;
 	if (!(data->precision == 0 && num == 0))
 		while (dig > 0)
 		{
@@ -89,7 +99,7 @@ void	ft_fillbegin(t_printf *data, intmax_t num, char *s, int digits)
 		s[i++] = ' ';
 		j++;
 	}
-	ft_putstr(s);
+	ft_putstr_buf(s, data->buf);
 	free(s);
 }
 
@@ -103,6 +113,7 @@ void	ft_fillend(t_printf *data, intmax_t num, char *s, int digits)
 	int width;
 
 	width = data->width;
+	//printf("YA%d", width);
 	prec = data->precision;
 	dig = digits;
 	max = (digits > data->precision) ? digits : data->precision;
@@ -160,6 +171,6 @@ void	ft_fillend(t_printf *data, intmax_t num, char *s, int digits)
 			s[i++] = (dig == 19) ? (num / ft_pow_10(dig - 1) + '0') : ((num % ft_pow_10(dig)) / ft_pow_10(dig - 1) + '0');
 			dig--;
 		}
-	ft_putstr(s);
+	ft_putstr_buf(s, data->buf);
 	free(s);
 }

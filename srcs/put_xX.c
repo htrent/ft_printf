@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   put_xX.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/02 17:13:46 by htrent           ###   ########.fr       */
+/*   Created: 2020/02/04 11:54:22 by htrent            #+#    #+#             */
+/*   Updated: 2020/02/04 13:45:35 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,13 @@ int 	put_data_ouxX(t_printf *data, int *k)
 		num = (unsigned long long) va_arg(data->params, unsigned long long);
 	else if (data->size == HH_SIZE)
 		num = (unsigned char) va_arg(data->params, unsigned int);
+	else if (data->size == J_SIZE)
+		num = (uintmax_t) va_arg(data->params, uintmax_t);
+	else if (data->size == Z_SIZE)
+		num = (size_t) va_arg(data->params, size_t);
 	else
 		num = (unsigned int) va_arg(data->params, unsigned int);
-
-	if (data->format[*k] == 'u')
+	if (data->format[*k] == 'u' || data->format[*k] == 'U')
 		return (put_data_u(data, k, num));
 	if (data->format[*k] == 'o')
 		return (put_data_o(data, k, num));
@@ -53,7 +56,7 @@ int 	put_data_ouxX(t_printf *data, int *k)
 	if (data->format[*k] == 'X')
 		str = ft_str_to_upper(str);
 	(*k)++;
-	ft_putstr(str);
+	ft_putstr_buf(str, data->buf);
 	free(str);
 	free(s);
 	return (0);
@@ -147,23 +150,23 @@ int 	put_data_zero(t_printf *data, int *k)
 		if ((data->flags >> TO_MINUS) % 2)
 		{
 			while (prec-- > 0)
-				ft_putchar('0');
+				ft_putchar_buf('0', data->buf);
 			while (width-- > data->precision)
-				ft_putchar(' ');
+				ft_putchar_buf(' ', data->buf);
 		}
 		else
 		{
 			while (width-- > data->precision)
-				ft_putchar(' ');
+				ft_putchar_buf(' ', data->buf);
 			while (prec-- > 0)
-				ft_putchar('0');
+				ft_putchar_buf('0', data->buf);
 		}
 		max = (data->precision > data->width) ? data->precision : data->width;
 		if (data->width != 0)
 			data->count_char += max;
 		else if (data->format[*k] == 'o' && (data->flags >> TO_SHARP) % 2)
 		{
-			ft_putchar('0');
+			ft_putchar_buf('0', data->buf);
 			data->count_char++;
 		}
 	}
@@ -171,15 +174,15 @@ int 	put_data_zero(t_printf *data, int *k)
 	{
 		if ((data->flags >> TO_MINUS) % 2)
 		{
-			ft_putchar('0');
+			ft_putchar_buf('0', data->buf);
 			while (width-- > 1)
-				ft_putchar(' ');
+				ft_putchar_buf(' ', data->buf);
 		}
 		else
 		{
 			while (width-- > 1)
-				ft_putchar(' ');
-			ft_putchar('0');
+				ft_putchar_buf(' ', data->buf);
+			ft_putchar_buf('0', data->buf);
 		}
 		max = (data->precision > data->width) ? data->precision : data->width;
 		if ((data->flags >> TO_SHARP) % 2 && data->precision == NO_PRECISION && data->width == 0)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   put_c.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/02 17:51:07 by htrent           ###   ########.fr       */
+/*   Created: 2020/02/04 11:57:43 by htrent            #+#    #+#             */
+/*   Updated: 2020/02/04 11:57:43 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int 	put_data_c(t_printf *data, int *k)
 		num = (wchar_t)va_arg(data->params, wint_t);
 	else
 		num = (char)va_arg(data->params, int);
-	if (num == 0)
-		return (put_data_zero_c(data, k));
+	//if (num == 0)
+	//	return (put_data_zero_c(data, k));
 	n = (data->width > 0) ? data->width : 1;
 	s = ft_strnew(n);
 	data->count_char += n;
@@ -43,12 +43,12 @@ int 	put_data_c(t_printf *data, int *k)
 		while (width-- > 1)
 			s[i++] = ' ';
 	}
-	ft_putstr(s);
+	ft_putstr_buf(s, data->buf);
 	free(s);
 	(*k)++;
 	return (0);
 }
-
+/*
 int		put_data_zero_c(t_printf *data, int *k)
 {
 	int n;
@@ -75,8 +75,8 @@ int		put_data_zero_c(t_printf *data, int *k)
 		while (width-- > 1)
 			s[i++] = ' ';
 	}
-	ft_putstr(s);
+	ft_putstr_buf(s, data->buf);
 	free(s);
 	(*k)++;
 	return (0);
-}
+}*/
