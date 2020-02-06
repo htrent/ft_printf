@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:46 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/04 13:55:53 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/06 13:09:24 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int 	put_data_di(t_printf *data, int *k)
 	if (data->precision == 0 && num == 0)
 		digits = 0;
 	n = (digits > data->precision) ? digits : data->precision;
-	if ((data->flags >> TO_SPACE) % 2 || (data->flags >> TO_PLUS) % 2 || num < 0)
+	if ((((data->flags >> TO_SPACE) % 2 || (data->flags >> TO_PLUS) % 2) && num >= 0) || num < 0)
 		n++;
 	n = (n > data->width) ? n : data->width;
 	data->count_char += n;
@@ -65,19 +65,23 @@ void	ft_fillbegin(t_printf *data, intmax_t num, char *s, int digits)
 	int dig;
 	int prec;
 	int max;
+	int	sign;
 
 	prec = data->precision;
 	dig = digits;
 	max = (digits > data->precision) ? digits : data->precision;
 	i = 0;
+	sign = 1;
 	if ((data->flags >> TO_SPACE) % 2 && num >= 0 && (i = 1))
 		s[0] = ' ';
 	if ((data->flags >> TO_PLUS) % 2 && num >= 0 && (i = 1))
 		s[0] = '+';
-	if (num < 0 && (i = 1) && (num *= -1)/*&& (max++)*/)
+	if (num < 0)
 	{
-		if ((data->flags >> TO_PLUS) % 2 == 0)
-			max++;
+		//max++;
+		sign = -1;
+		i = 1;
+		num *= -1;
 		s[0] = '-';
 	}
 	while (prec > digits)
@@ -93,7 +97,7 @@ void	ft_fillbegin(t_printf *data, intmax_t num, char *s, int digits)
 			s[i++] = (num % ft_pow_10(dig)) / ft_pow_10(dig - 1) + '0';
 			dig--;
 		}
-	j = ((data->flags >> TO_PLUS) % 2 == 1 || (data->flags >> TO_SPACE) % 2 == 1 || num < 0) ? 1 : 0;
+	j = ((((data->flags >> TO_PLUS) % 2 || (data->flags >> TO_SPACE) % 2) && sign) || sign == -1) ? 1 : 0;
 	while (j < data->width - max)
 	{
 		s[i++] = ' ';
