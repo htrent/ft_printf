@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:54:22 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/04 13:45:35 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/06 13:30:09 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ int 	put_data_ouxX(t_printf *data, int *k)
 		num = (unsigned int) va_arg(data->params, unsigned int);
 	if (data->format[*k] == 'u' || data->format[*k] == 'U')
 		return (put_data_u(data, k, num));
-	if (data->format[*k] == 'o')
-		return (put_data_o(data, k, num));
 	if (num == 0)
 		return (put_data_zero(data, k));
+	if (data->format[*k] == 'o')
+		return (put_data_o(data, k, num));
 	s = ft_utoa_base(num, 16);
 	digits = ft_strlen(s);
 	n = (data->precision > digits) ? data->precision : digits;
@@ -162,13 +162,13 @@ int 	put_data_zero(t_printf *data, int *k)
 				ft_putchar_buf('0', data->buf);
 		}
 		max = (data->precision > data->width) ? data->precision : data->width;
-		if (data->width != 0)
+		//if (data->width != 0)
 			data->count_char += max;
-		else if (data->format[*k] == 'o' && (data->flags >> TO_SHARP) % 2)
-		{
-			ft_putchar_buf('0', data->buf);
-			data->count_char++;
-		}
+		//else if (data->format[*k] == 'o' && (data->flags >> TO_SHARP) % 2)
+		//{
+		//	ft_putchar_buf('0', data->buf);
+		//	data->count_char++;
+		//}
 	}
 	else
 	{
@@ -180,8 +180,12 @@ int 	put_data_zero(t_printf *data, int *k)
 		}
 		else
 		{
-			while (width-- > 1)
-				ft_putchar_buf(' ', data->buf);
+			if ((data->flags >> TO_ZERO) % 2)
+				while (width-- > 1)
+					ft_putchar_buf('0', data->buf);
+			else
+				while (width-- > 1)
+					ft_putchar_buf(' ', data->buf);
 			ft_putchar_buf('0', data->buf);
 		}
 		max = (data->precision > data->width) ? data->precision : data->width;

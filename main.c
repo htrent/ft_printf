@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/05 15:59:29 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/06 13:41:40 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int main() {
 	u_x = -42;
 																							ft_printf("    ft_printf: ");
 
-	ftp = ft_printf("\"%f\"", 9.12f);													printf("\nret_ft_printf: %d\n", ftp/* - 3*/);printf("       printf: ");
-	p   =    printf("\"%f\"", 1.123f);														printf("\n   ret_printf: %d\n", p/* - 3*/);
+	ftp = ft_printf("\"%#08.2o\"", 34);														printf("\nret_ft_printf: %d\n", ftp - 2);printf("       printf: ");
+	p   =    printf("\"%#08.2o\"", 34);														printf("\n   ret_printf: %d\n", p - 2);
 	return 0;
 }

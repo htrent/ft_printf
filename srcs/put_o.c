@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:54:14 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/04 11:54:14 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/06 13:39:51 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int 	put_data_o(t_printf *data, int *k, uintmax_t num)
 	int max;
 	int digits;
 
-	if (num == 0)
-		return (put_data_zero(data, k));
 	s = ft_utoa_base(num, 8);
 	digits = ft_strlen(s);
+	if ((data->flags >> TO_SHARP) % 2)
+		digits++;
 	n = (data->precision > digits) ? data->precision : digits;
-	if ((data->flags >> TO_SHARP == 1) % 2 && (data->precision <= digits))
-		n += 1;
+	//if ((data->flags >> TO_SHARP == 1) % 2 && (data->precision <= digits))
+	//	n += 1;
 	max = (n > data->width) ? n : data->width;
 	str = ft_strnew(max);
 	data->count_char += max;
@@ -88,19 +88,23 @@ char 	*ft_fillend_o(t_printf *data, char *str, char *num)
 	i = 0;
 	//1 блок
 	max = (digits > data->precision) ? digits : data->precision;
-	if ((data->flags >> TO_SHARP) % 2)
-		max += 1;
-	if ((data->flags >> TO_ZERO) % 2 == 0)
+	//if ((data->flags >> TO_SHARP) % 2)
+	//	max += 1;
+	if (((data->flags >> TO_ZERO) % 2) && (data->precision == NO_PRECISION))
+		while (width-- > max)
+			str[i++] = '0';
+	else
 		while (width-- > max)
 			str[i++] = ' ';
 	//2 блок
 	if ((data->flags >> TO_SHARP) % 2 && *num != '0' && (data->precision <= digits))
 		str[i++] = '0';
-	if ((data->flags >> TO_ZERO) % 2)
+	if ((data->flags >> TO_ZERO) % 2 && data->precision == NO_PRECISION)
 		while (width-- > max)
 			str[i++] = '0';
-	while (prec-- > digits)
-		str[i++] = '0';
+	else
+		while (prec-- > digits)
+			str[i++] = '0';
 	while (*num)
 	{
 		str[i++] = *num;
