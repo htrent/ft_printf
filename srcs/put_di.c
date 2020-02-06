@@ -6,46 +6,49 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:46 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/06 13:09:24 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/06 19:56:43 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <limits.h>
 
-int 	put_data_di(t_printf *data, int *k)
+intmax_t		init_size_di(t_printf *data)
 {
-	intmax_t num;
-	char *s;
-	int n;
-	int digits;
+	intmax_t	num;
 
 	if (data->size == L_SIZE)
-		num = (long int) va_arg(data->params, long int);
+		num = (long int)va_arg(data->params, long int);
 	else if (data->size == H_SIZE)
-		num = (short) va_arg(data->params, int);
+		num = (short)va_arg(data->params, int);
 	else if (data->size == LL_SIZE)
-		num = (long long) va_arg(data->params, long long);
+		num = (long long)va_arg(data->params, long long);
 	else if (data->size == HH_SIZE)
-		num = (char) va_arg(data->params, int);
+		num = (char)va_arg(data->params, int);
 	else if (data->size == J_SIZE)
-		num = (intmax_t) va_arg(data->params, intmax_t);
+		num = (intmax_t)va_arg(data->params, intmax_t);
 	else if (data->size == Z_SIZE)
-		num = (size_t) va_arg(data->params, size_t);
+		num = (size_t)va_arg(data->params, size_t);
 	else
-		num = (int) va_arg(data->params, int);
+		num = (int)va_arg(data->params, int);
+	return (num);
+}
+
+int				put_data_di(t_printf *data, int *k)
+{
+	intmax_t	num;
+	char		*s;
+	int			n;
+	int			digits;
+
+	num = init_size_di(data);
 	if (num == LONG_MIN || num == LLONG_MIN)
-	{
-		ft_putstr_buf("-9223372036854775808", data->buf);
-		data->count_char += 20;
-		(*k)++;
-		return (0);
-	}
+		return (edge_di(data, k));
 	digits = ft_count_of_digits(num);
 	if (data->precision == 0 && num == 0)
 		digits = 0;
 	n = (digits > data->precision) ? digits : data->precision;
-	if ((((data->flags >> TO_SPACE) % 2 || (data->flags >> TO_PLUS) % 2) && num >= 0) || num < 0)
+	if ((((data->flags >> TO_SPACE) % 2 || (data->flags >> TO_PLUS) % 2)
+		&& num >= 0) || num < 0)
 		n++;
 	n = (n > data->width) ? n : data->width;
 	data->count_char += n;
@@ -58,123 +61,54 @@ int 	put_data_di(t_printf *data, int *k)
 	return (0);
 }
 
-void	ft_fillbegin(t_printf *data, intmax_t num, char *s, int digits)
+void			ft_fillbegin(t_printf *data, intmax_t num, char *s, int digits)
 {
 	int i;
 	int j;
-	int dig;
 	int prec;
 	int max;
 	int	sign;
 
 	prec = data->precision;
-	dig = digits;
 	max = (digits > data->precision) ? digits : data->precision;
 	i = 0;
-	sign = 1;
-	if ((data->flags >> TO_SPACE) % 2 && num >= 0 && (i = 1))
-		s[0] = ' ';
-	if ((data->flags >> TO_PLUS) % 2 && num >= 0 && (i = 1))
-		s[0] = '+';
-	if (num < 0)
-	{
-		//max++;
-		sign = -1;
-		i = 1;
-		num *= -1;
-		s[0] = '-';
-	}
-	while (prec > digits)
-	{
-		s[i++] = '0';
-		prec--;
-	}
-	////if (num < 0 && *num *= -1)
-	//	max--;
+	sign = first_init_begin(data, &num, &i, s);
+	fill_zeros(&prec, digits, &i, s);
 	if (!(data->precision == 0 && num == 0))
-		while (dig > 0)
-		{
-			s[i++] = (num % ft_pow_10(dig)) / ft_pow_10(dig - 1) + '0';
-			dig--;
-		}
-	j = ((((data->flags >> TO_PLUS) % 2 || (data->flags >> TO_SPACE) % 2) && sign) || sign == -1) ? 1 : 0;
-	while (j < data->width - max)
-	{
+		ft_itoa_di(s, digits, num, &i);
+	j = ((((data->flags >> TO_PLUS) % 2 || (data->flags >> TO_SPACE) % 2)
+			&& (sign == 1)) || (sign == -1)) ? 1 : 0;
+	while (j++ < data->width - max)
 		s[i++] = ' ';
-		j++;
-	}
 	ft_putstr_buf(s, data->buf);
 	free(s);
 }
 
-void	ft_fillend(t_printf *data, intmax_t num, char *s, int digits)
+void			ft_fillend(t_printf *data, intmax_t num, char *s, int digits)
 {
 	int i;
 	int j;
-	int dig;
 	int prec;
 	int max;
 	int width;
 
 	width = data->width;
-	//printf("YA%d", width);
 	prec = data->precision;
-	dig = digits;
 	max = (digits > data->precision) ? digits : data->precision;
-	max += ((data->flags >> TO_SPACE) % 2 || (data->flags >> TO_PLUS) % 2 || num < 0) ? 1 : 0;
+	max += ((data->flags >> TO_SPACE) % 2 ||
+			(data->flags >> TO_PLUS) % 2 || num < 0) ? 1 : 0;
 	i = 0;
 	if (data->precision != NO_PRECISION || (data->flags >> TO_ZERO) % 2 == 0)
-		while (width > max)
-		{
+		while (width-- > max)
 			s[i++] = ' ';
-			width--;
-		}
-	if ((data->flags >> TO_ZERO) % 2 == 0)
-	{
-		//while (width > max)
-		//{
-		//	s[i++] = ' ';
-		//	width--;
-		//}
-		if ((data->flags >> TO_SPACE) % 2 && num >= 0)
-			s[i] = ' ';
-		if ((data->flags >> TO_PLUS) % 2 && num >= 0)
-			s[i] = '+';
-		if (num < 0)
-			s[i] = '-';
-		if ((data->flags >> TO_PLUS) % 2 || (data->flags >> TO_SPACE) % 2 || (num < 0))
-			i++;
-	}
-	else
-	{
-		if ((data->flags >> TO_SPACE) % 2 && num >= 0)
-			s[i] = ' ';
-		if ((data->flags >> TO_PLUS) % 2 && num >= 0)
-			s[i] = '+';
-		if (num < 0)
-			s[i] = '-';
-		if ((((data->flags >> TO_PLUS) % 2 ||(data->flags >> TO_SPACE) % 2) && num >= 0) || (num < 0))
-			i++;
-		while (width > max)
-		{
-			s[i++] = '0';
-			width--;
-		}
-	}
-	if (num < 0)
-		num *= -1;
-	while (prec > dig)
-	{
-		s[i++] = '0';
-		prec--;
-	}
-	j = ((data->flags >> TO_PLUS) % 2 || (data->flags >> TO_SPACE) % 2 || num < 0) ? 1 : 0;
+	first_init_end(data, &num, &i, s);
+	if ((data->flags >> TO_ZERO) % 2)
+		fill_zeros(&width, max, &i, s);
+	fill_zeros(&prec, digits, &i, s);
+	j = ((data->flags >> TO_PLUS) % 2 ||
+			(data->flags >> TO_SPACE) % 2 || num < 0) ? 1 : 0;
 	if (!(data->precision == 0 && num == 0))
-		while (dig > 0)
-		{
-			s[i++] = (dig == 19) ? (num / ft_pow_10(dig - 1) + '0') : ((num % ft_pow_10(dig)) / ft_pow_10(dig - 1) + '0');
-			dig--;
-		}
+		ft_itoa_di(s, digits, num, &i);
 	ft_putstr_buf(s, data->buf);
 	free(s);
 }

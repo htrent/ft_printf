@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:58 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/04 13:25:36 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/06 15:55:36 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,11 @@ int	manage_precision(t_printf *data, int *k)
 		if (data->format[*k] == '*')
 		{
 			data->precision = va_arg(data->params, int);
+			if (data->precision < 0)
+			{
+				data->flags += F_MINUS;
+				data->precision = 0;
+			}
 			(*k)++;
 		}
 		else if (ft_isdigit(data->format[*k]))

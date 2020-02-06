@@ -12,6 +12,12 @@
 
 #include "ft_printf.h"
 
+void		fill_zeros(int *a, int b, int *i, char *s)
+{
+	while ((*a)-- > b)
+		s[(*i)++] = '0';
+}
+
 intmax_t max(intmax_t a, intmax_t b)
 {
 	if (a > b)
@@ -68,7 +74,7 @@ void	ft_putchar_buf(char c, char buf[BUFF_SIZE + 1])
 	int i;
 
 	i = 0;
-	while (buf[i] != '\0' && i < BUFF_SIZE)
+	while (buf[i] != '\0' && i < BUFF_SIZE + 1)
 		i++;
 	if (i == BUFF_SIZE + 1)
 	{
@@ -79,7 +85,7 @@ void	ft_putchar_buf(char c, char buf[BUFF_SIZE + 1])
 	buf[i] = c;
 }
 
-void	ft_putstr_buf(char *str, char buf[BUFF_SIZE + 1])
+void	ft_putstr_buf(char *str, char buf[BUFF_SIZE])
 {
 	int i;
 
@@ -94,7 +100,7 @@ void	ft_putstr_buf(char *str, char buf[BUFF_SIZE + 1])
 			str++;
 			i++;
 		}
-		if (i == BUFF_SIZE + 1)
+		if (i == BUFF_SIZE)
 		{
 			ft_putstr(buf);
 			ft_bzero(buf, BUFF_SIZE);

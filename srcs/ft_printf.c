@@ -109,6 +109,10 @@ int	ft_printf(const char *format, ...)
 		if (data->format[i] == '%')
 		{
 			i++;
+			data->flags = 32;
+			data->size = 0;
+			data->precision = -1;
+			data->width = 0;
 			//printf("\'%c\'\n", data.format[i]);
 			if (data->format[i] == '\0' || manage_var(data, &i))
 				break ;

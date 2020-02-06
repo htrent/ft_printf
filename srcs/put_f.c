@@ -6,7 +6,7 @@
 /*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 16:04:21 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/06 17:08:38 by ffood            ###   ########.fr       */
+/*   Updated: 2020/02/06 18:55:47 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,8 +160,13 @@ void	add_pow_two(char big_num[NUM_SIZE], int power)
 			number /= 10;
 			j--;
 		}
-		if (flag)
-			big_num[j] = (big_num[j] == -1) ? 1 : big_num[j] + 1;
+		while (flag)
+		{
+			big_num[j] = (big_num[j] == -1) ? 0 : big_num[j];
+			flag = (big_num[j] + 1 > 9) ? 1 : 0;
+			big_num[j] = (big_num[j] + 1) % 10;
+			j--;
+		}
 	}
 	else
 	{
@@ -208,8 +213,13 @@ void	add_pow_two(char big_num[NUM_SIZE], int power)
 			flag = 0;
 			j--;
 		}
-		if (prev_flag)
-			big_num[j] = 1;
+		while (prev_flag)
+		{
+			big_num[j] = (big_num[j] == -1) ? 0 : big_num[j];
+			prev_flag = (big_num[j] + 1 > 9) ? 1 : 0;
+			big_num[j] = (big_num[j] + 1) % 10;
+			j--;
+		}
 	}
 	//print_buf1(big_num);
 }
@@ -312,12 +322,11 @@ void	add_pow_five(char big_num[NUM_SIZE], int power)
 		i++;
 
 	i = NUM_SIZE - i; //кол-во цифр
-	j = 0;
-	//while (j < i)  /////////////////////////////////// ЭТО МОЖНО СДЕЛАТЬ СРАЗУ В ЦИКЛЕ
-	//{
-	//	big_num[j] += (big_num[j] == -1) ? 1 : 0; //зануляем цифры без значений, доводим до "столбика"
-	//	j++;
-	//}
+
+	j = -1;
+	while (++j < i)
+		big_num[j] = (big_num[j] == -1) ? 0 : big_num[j];
+
 	flag = 0;
 	prev_flag = 0;
 	j = NUM_SIZE - 1; //с конца берем из big_five
@@ -409,7 +418,7 @@ int		put_data_f(t_printf *data, int *k)
 		add_pow_five(big_num2, e);
 	while (i < 53)
 	{
-		printf("e-i: %d, %llu\n", (e - i), (number.bits.m >> (52 - i)) & 1);
+		//printf("e-i: %d, %llu\n", (e - i), (number.bits.m >> (52 - i)) & 1);
 		if (e - i < 0)
 		{
 			if ((number.bits.m >> (52 - i)) & 1)
@@ -420,8 +429,8 @@ int		put_data_f(t_printf *data, int *k)
 			if ((number.bits.m >> (52 - i)) & 1)
 				add_pow_two(big_num1, e - i);
 		}
-		print_buf1(big_num1);
-		print_buf2(big_num2);
+		//print_buf1(big_num1);
+		//print_buf2(big_num2);
 		i++;
 	}
 	print_buf1(big_num1);
@@ -432,61 +441,3 @@ int		put_data_f(t_printf *data, int *k)
 	(*k)++;
 	return (0);
 }
-
-
-
-
-/*
- * 	c.p = number.bits;
-	printf("\n31 \t 30 \t 29 \t 28 \t 27 \t 26 \t 25 \t 24 \t 23 \t 22 \t 21 \t 20 \t 19 \t 18 \t 17 \t 16 \t 15 \t 14 \t 13 \t 12 \t 11 \t 10 \t 9 \t 8 \t 7 \t 6 \t 5 \t 4 \t 3 \t 2 \t 1 \t 0 \n");
-	printf("%d \t %d \t %d \t %d \t %d \t "
-		   "%d \t %d \t %d \t %d \t %d \t "
-           "%d \t %d \t %d \t %d \t %d \t "
-           "%d \t %d \t %d \t %d \t %d \t "
-           "%d \t %d \t %d \t %d \t %d \t "
-		   "%d \t %d \t %d \t %d \t %d \t %d \t %d\n",
-		   c.byte.a31, c.byte.a30, c.byte.a29, c.byte.a28, c.byte.a27,
-		   c.byte.a26, c.byte.a25, c.byte.a24, c.byte.a23, c.byte.a22,
-		   c.byte.a21, c.byte.a20, c.byte.a19, c.byte.a18, c.byte.a17,
-		   c.byte.a16, c.byte.a15, c.byte.a14, c.byte.a13, c.byte.a12,
-		   c.byte.a11, c.byte.a10, c.byte.a9, c.byte.a8, c.byte.a7,
-		   c.byte.a6, c.byte.a5, c.byte.a4, c.byte.a3, c.byte.a2, c.byte.a1, c.byte.a0);
- */
-
-/*
-#include <stdio.h>
-
-struct point
-{
-    unsigned int x:5;   // 0-31
-    unsigned int y:3;   // 0-7
-};
-
-union code
-{
-    struct point p;
-    struct{
-        unsigned a0:1;
-        unsigned a1:1;
-        unsigned a2:1;
-        unsigned a3:1;
-        unsigned a4:1;
-        unsigned a5:1;
-        unsigned a6:1;
-        unsigned a7:1;
-    } byte;
-};
-
-
-int main(void)
-{
-    struct point center = {2, 5};
-    union code c;
-    c.p = center;
-    printf("7 \t 6 \t 5 \t 4 \t 3 \t 2 \t 1 \t 0 \n");
-    printf("%d \t %d \t %d \t %d \t %d \t %d \t %d \t %d \n",
-            c.byte.a7, c.byte.a6, c.byte.a5, c.byte.a4,
-            c.byte.a3, c.byte.a2, c.byte.a1, c.byte.a0);
-    return 0;
-}
- */

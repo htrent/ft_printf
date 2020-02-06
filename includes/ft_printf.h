@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:54 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/05 14:35:34 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/06 20:04:21 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/types.h>
 # include <stdarg.h>
 # include <wchar.h>
+# include <limits.h>
 //////////////////////
 #include <stdio.h> //////DELETE!!!!!!!!!!!
 //////////////////////
@@ -48,7 +49,7 @@
 # define Z_SIZE			7
 # define T_SIZE			8
 
-# define BUFF_SIZE		1000
+# define BUFF_SIZE		100
 
 # define NUM_SIZE		4940
 # define POW_5_27	7450580596923828125
@@ -124,4 +125,14 @@ int 					put_data_c(t_printf *data, int *k);
 int						put_data_zero_c(t_printf *data, int *k);
 int 					put_data_s(t_printf *data, int *k);
 int 					put_data_f(t_printf *data, int *k);
+int 					put_data_zero_o(t_printf *data, int *k);
+int						edge_di(t_printf *data, int *k);
+int						first_init_begin(t_printf *data, intmax_t *num, int *i, char *s);
+void					ft_itoa_di(char *s, int digits, intmax_t num, int *i);
+void					first_init_end(t_printf *data, intmax_t *num, int *i, char *s);
+intmax_t				init_size_di(t_printf *data);
+void					fill_zeros(int *a, int b, int *i, char *s);
+uintmax_t				init_size_ouxX(t_printf *data);
+int						parse_args(t_printf *data, int *k, uintmax_t num);
+void					check_sharp(t_printf *data, char *str, int *i);
 #endif
