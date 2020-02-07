@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:54 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/06 20:04:21 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/07 14:10:50 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,9 @@ void	ft_putchar_buf(char c, char buf[BUFF_SIZE + 1]);
 t_printf				*init_data(const char *format);
 int						put_data(t_printf *data, int *k);
 int						manage_var(t_printf *data, int *k);
-int 					put_data_ouxX(t_printf *data, int *k);
-char					*ft_fillbegin_xX(t_printf *data, char *str, char *num);
-char					*ft_fillend_xX(t_printf *data, char *str, char *num);
+int 					put_data_oux(t_printf *data, int *k);
+char					*ft_fillbegin_x(t_printf *data, char *str, char *num);
+char					*ft_fillend_x(t_printf *data, char *str, char *num);
 int						put_data_zero(t_printf *data, int *k);
 int						ft_put_percent(t_printf *data);
 int						put_data_exception(t_printf *data, int *k);
@@ -132,7 +132,12 @@ void					ft_itoa_di(char *s, int digits, intmax_t num, int *i);
 void					first_init_end(t_printf *data, intmax_t *num, int *i, char *s);
 intmax_t				init_size_di(t_printf *data);
 void					fill_zeros(int *a, int b, int *i, char *s);
-uintmax_t				init_size_ouxX(t_printf *data);
+uintmax_t				init_size_oux(t_printf *data);
 int						parse_args(t_printf *data, int *k, uintmax_t num);
 void					check_sharp(t_printf *data, char *str, int *i);
+void					action1_x(t_printf *data, int *prec, int *width, int key);
+void					action2_x(t_printf *data, int *width, int key);
+void					help_x_noprec(t_printf *data);
+void					check_sharp(t_printf *data, char *str, int *i);
+int						parse_args(t_printf *data, int *k, uintmax_t num);
 #endif

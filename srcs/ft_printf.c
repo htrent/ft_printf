@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:39 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/04 13:51:43 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/07 13:44:05 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int 	put_data(t_printf *data, int *k)
 		if (data->format[*k] == 'd' || data->format[*k] == 'i')
 			put_data_di(data, k);
 		else if (ft_strchr("ouUxX", data->format[*k]) != NULL)
-			put_data_ouxX(data, k);
+			put_data_oux(data, k);
 		else if (data->format[*k] == 'p')
 			put_data_p(data, k);
 		else if (data->format[*k] == 'c')

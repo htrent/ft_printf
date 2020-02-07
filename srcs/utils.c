@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/03 14:31:56 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/07 13:48:46 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ int 	ft_is_size(char c)
 	return (0);
 }
 
-void	ft_putchar_buf(char c, char buf[BUFF_SIZE + 1])
+void	ft_putchar_buf(char c, char buf[BUFF_SIZE])
 {
 	int i;
 
 	i = 0;
-	while (buf[i] != '\0' && i < BUFF_SIZE + 1)
+	while (buf[i] != '\0' && i < BUFF_SIZE)
 		i++;
-	if (i == BUFF_SIZE + 1)
+	if (i == BUFF_SIZE)
 	{
 		ft_putstr(buf);
 		ft_bzero(buf, BUFF_SIZE);

@@ -6,13 +6,13 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:54:22 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/06 20:11:54 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/07 14:14:12 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-uintmax_t		init_size_ouxX(t_printf *data)
+uintmax_t		init_size_oux(t_printf *data)
 {
 	uintmax_t	num;
 
@@ -33,16 +33,7 @@ uintmax_t		init_size_ouxX(t_printf *data)
 	return (num);
 }
 
-int		parse_args(t_printf *data, int *k, uintmax_t num)
-{
-	if (data->format[*k] == 'u' || data->format[*k] == 'U')
-		return (put_data_u(data, k, num));
-	if (data->format[*k] == 'o')
-		return (put_data_o(data, k, num));
-	return (put_data_zero(data, k));
-}
-
-int 	put_data_ouxX(t_printf *data, int *k)
+int		put_data_oux(t_printf *data, int *k)
 {
 	uintmax_t num;
 	char *s;
@@ -51,7 +42,7 @@ int 	put_data_ouxX(t_printf *data, int *k)
 	int max;
 	int digits;
 
-	num = init_size_ouxX(data);
+	num = init_size_oux(data);
 	if (ft_strchr("ouU", data->format[*k]) || num == 0)
 		return (parse_args(data, k, num));
 	s = ft_utoa_base(num, 16);
@@ -62,8 +53,8 @@ int 	put_data_ouxX(t_printf *data, int *k)
 	max = (n > data->width) ? n : data->width;
 	str = ft_strnew(max);
 	data->count_char += max;
-	str = ((data->flags >> TO_MINUS) % 2) ? ft_fillbegin_xX(data, str, s)
-			: ft_fillend_xX(data, str, s);
+	str = ((data->flags >> TO_MINUS) % 2) ? ft_fillbegin_x(data, str, s)
+			: ft_fillend_x(data, str, s);
 	if (data->format[*k] == 'X')
 		str = ft_str_to_upper(str);
 	(*k)++;
@@ -73,16 +64,7 @@ int 	put_data_ouxX(t_printf *data, int *k)
 	return (0);
 }
 
-void	check_sharp(t_printf *data, char *str, int *i)
-{
-	if ((data->flags >> TO_SHARP) % 2)
-	{
-		str[(*i)++] = '0';
-		str[(*i)++] = 'x';
-	}
-}
-
-char 	*ft_fillbegin_xX(t_printf *data, char *str, char *num)
+char 	*ft_fillbegin_x(t_printf *data, char *str, char *num)
 {
 	int i;
 	int prec;
@@ -106,9 +88,7 @@ char 	*ft_fillbegin_xX(t_printf *data, char *str, char *num)
 	return (str);
 }
 
-
-
-char 	*ft_fillend_xX(t_printf *data, char *str, char *num)
+char 	*ft_fillend_x(t_printf *data, char *str, char *num)
 {
 	int i;
 	int prec;
@@ -146,54 +126,20 @@ int 	put_data_zero(t_printf *data, int *k)
 	if (data->precision != NO_PRECISION)
 	{
 		if ((data->flags >> TO_MINUS) % 2)
-		{
-			while (prec-- > 0)
-				ft_putchar_buf('0', data->buf);
-			while (width-- > data->precision)
-				ft_putchar_buf(' ', data->buf);
-		}
+			action1_x(data, &prec, &width, 1);
 		else
-		{
-			while (width-- > data->precision)
-				ft_putchar_buf(' ', data->buf);
-			while (prec-- > 0)
-				ft_putchar_buf('0', data->buf);
-		}
+			action1_x(data, &prec, &width, 0);
 		max = (data->precision > data->width) ? data->precision : data->width;
-		//if (data->width != 0)
 		data->count_char += max;
-		if (data->format[*k] == 'o' && (data->flags >> TO_SHARP) % 2 && data->precision == 0 && data->width == 0)
+		if (data->format[*k] == 'o' && (data->flags >> TO_SHARP) % 2
+		&& data->precision == 0 && data->width == 0)
 		{
 			ft_putchar_buf('0', data->buf);
 			data->count_char++;
 		}
 	}
 	else
-	{
-		if ((data->flags >> TO_MINUS) % 2)
-		{
-			ft_putchar_buf('0', data->buf);
-			while (width-- > 1)
-				ft_putchar_buf(' ', data->buf);
-		}
-		else
-		{
-			if ((data->flags >> TO_ZERO) % 2)
-				while (width-- > 1)
-					ft_putchar_buf('0', data->buf);
-			else
-				while (width-- > 1)
-					ft_putchar_buf(' ', data->buf);
-			ft_putchar_buf('0', data->buf);
-		}
-		max = (data->precision > data->width) ? data->precision : data->width;
-		if ((data->flags >> TO_SHARP) % 2 && data->precision == NO_PRECISION && data->width == 0)
-			max = 1;
-		if (data->width != 0)
-			data->count_char += max;
-		else
-			data->count_char++;
-	}
+		help_x_noprec(data);
 	(*k)++;
 	return (0);
 }
