@@ -43,7 +43,8 @@ void	help_x_noprec(t_printf *data)
 	else
 		action2_x(data, &width, 0);
 	max = (data->precision > data->width) ? data->precision : data->width;
-	if ((data->flags >> TO_SHARP) % 2 && data->precision == NO_PRECISION && data->width == 0)
+	if ((data->flags >> TO_SHARP) % 2 &&
+	data->precision == NO_PRECISION && data->width == 0)
 		max = 1;
 	data->count_char += (data->width != 0) ? max : 1;
 }

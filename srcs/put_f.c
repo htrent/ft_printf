@@ -6,7 +6,7 @@
 /*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 16:04:21 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/07 13:43:30 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/07 19:08:20 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -373,11 +373,11 @@ int		put_data_f(t_printf *data, int *k)
 	ft_memset(big_num1, -1, NUM_SIZE);
 	ft_memset(big_num2, -1, NUM_SIZE);
 	if (data->size == L_SIZE)
-		num = (double) va_arg(data->params, double);
-	else if (data->size == LL_SIZE)
+		num = (long double) va_arg(data->params, double);
+	else if (data->size == L_UPPER_SIZE)
 		num = (long double) va_arg(data->params, long double);
 	else
-		num = (double) va_arg(data->params, double);
+		num = (long double) va_arg(data->params, double);
 	number.num = num;
 	c.p = number.bits;
 

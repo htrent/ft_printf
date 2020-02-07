@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:54:07 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/07 13:43:30 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/07 20:52:35 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int put_data_p(t_printf *data, int *k)
 	n = (digits > data->precision) ? digits : data->precision;
 	n += 2;
 	max = (n > data->width) ? n : data->width;
-	str = ft_strnew(max);
 	data->count_char += max;
+	str = ft_strnew(max);
 	i = 0;
 	if ((data->flags >> TO_MINUS) % 2)
 	{
@@ -54,7 +54,6 @@ int put_data_p(t_printf *data, int *k)
 			str[i++] = ' ';
 			width--;
 		}
-
 	}
 	else
 	{
@@ -79,7 +78,6 @@ int put_data_p(t_printf *data, int *k)
 	(*k)++;
 	ft_putstr_buf(str, data->buf);
 	free(str);
-	//free(s);
 	return (0);
 }
 

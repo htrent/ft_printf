@@ -53,7 +53,8 @@ SOURCES_LIST = ft_atoi.c \
 	   put_s.c \
 	   put_f.c \
 	   help_utils_di.c \
-	   help_utils_x.c
+	   help_utils_x.c \
+	   help_utils_s.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/

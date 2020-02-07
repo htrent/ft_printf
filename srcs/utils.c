@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/07 13:48:46 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/07 18:59:02 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 void		fill_zeros(int *a, int b, int *i, char *s)
 {
-	while ((*a)-- > b)
-		s[(*i)++] = '0';
+	while (*a > b)
+	{
+		s[*i] = '0';
+		(*a)--;
+		(*i)++;
+	}
 }
 
 intmax_t max(intmax_t a, intmax_t b)

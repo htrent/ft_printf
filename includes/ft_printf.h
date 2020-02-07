@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:54 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/07 14:10:50 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/07 19:34:25 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,4 +140,10 @@ void					action2_x(t_printf *data, int *width, int key);
 void					help_x_noprec(t_printf *data);
 void					check_sharp(t_printf *data, char *str, int *i);
 int						parse_args(t_printf *data, int *k, uintmax_t num);
+int						put_data_s_null(t_printf *data, int *k);
+void					help1_s(char *buf, int *prec, int *i, char *s);
+void 					help2_s(t_printf *data, int n, int *i, char *buf);
+void					help3_s(t_printf *data, int n, int *i, char *buf);
+int						init_s(t_printf *data, int *prec, int *n, char *s);
+
 #endif

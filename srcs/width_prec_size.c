@@ -78,6 +78,8 @@ int		manage_size(t_printf *data, int *k)
 			data->size = HH_SIZE;
 		else if (data->format[*k] == 'h' && ((*k)++))
 			data->size = H_SIZE;
+		else if (data->format[*k] == 'L' && ((*k)++))
+			data->size = L_UPPER_SIZE;
 		else if (data->format[*k] == 'j' && ((*k)++))
 			data->size = J_SIZE;
 		else if (data->format[*k] == 'z' && ((*k)++))
