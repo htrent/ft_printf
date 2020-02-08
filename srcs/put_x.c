@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:54:22 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/07 18:55:48 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/08 16:53:30 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int				put_data_oux(t_printf *data, int *k)
 	if (data->format[*k] == 'X')
 		str = ft_str_to_upper(str);
 	(*k)++;
-	ft_putstr_buf(str, data->buf);
+	ft_putstr_buf(str, data->buf, data);
 	free(str);
 	free(s);
 	return (0);

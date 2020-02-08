@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bzero.c                                            :+:      :+:    :+:   */
+/*   ft_putchar_buf.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/05 13:30:18 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/07 13:43:30 by htrent           ###   ########.fr       */
+/*   Created: 2020/02/08 15:54:05 by htrent            #+#    #+#             */
+/*   Updated: 2020/02/08 18:00:26 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_bzero(void *s, size_t n)
+void	ft_putchar_buf(char c, char buf[BUFF_SIZE], t_printf *data)
 {
-	void	*begin;
+	int i;
 
-	begin = s;
-	while (n--)
-		*(char *)s++ = 0;
-	s = begin;
+	i = 0;
+	while (i < data->count_buf && i < BUFF_SIZE - 1)
+		i++;
+	if (i == BUFF_SIZE - 1)
+	{
+		ft_putstr_pft(buf, data);
+		ft_bzero(buf, BUFF_SIZE);
+		i = 0;
+	}
+	data->count_buf++;
+	buf[i] = c;
 }

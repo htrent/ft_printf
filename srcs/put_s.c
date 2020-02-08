@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/07 19:40:14 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/08 16:52:40 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int				put_data_s(t_printf *data, int *k)
 		help3_s(data, n, &i, buf);
 		help1_s(buf, &prec, &i, s);
 	}
-	ft_putstr_buf(buf, data->buf);
+	ft_putstr_buf(buf, data->buf, data);
 	free(buf);
 	(*k)++;
 	return (0);
@@ -64,7 +64,7 @@ int				put_data_s_null(t_printf *data, int *k)
 			buf[i++] = (data->flags >> TO_ZERO) % 2 ? '0' : ' ';
 		help1_s(buf, &prec, &i, s);
 	}
-	ft_putstr_buf(buf, data->buf);
+	ft_putstr_buf(buf, data->buf, data);
 	free(buf);
 	(*k)++;
 	return (0);

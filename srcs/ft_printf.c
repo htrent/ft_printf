@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:39 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/07 13:44:05 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/08 18:33:22 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_printf	*init_data(const char *format)
 	data->size = 0;
 	data->precision = -1;
 	data->width = 0;
+	data->count_buf = 0;
 	while (i < BUFF_SIZE)
 		data->buf[i++] = '\0';
 	return (data);
@@ -120,11 +121,11 @@ int	ft_printf(const char *format, ...)
 		else
 		{
 			data->count_char++;
-			ft_putchar_buf(format[i], data->buf);
+			ft_putchar_buf(format[i], data->buf, data);
 			i++;
 		}
 	}
 	va_end(data->params);
-	ft_putstr(data->buf);
+	ft_putstr_pft(data->buf, data);
 	return (data->count_char);
 }

@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:54:14 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/07 20:18:54 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/08 19:49:13 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int			put_data_o(t_printf *data, int *k, uintmax_t num)
 	str = ((data->flags >> TO_MINUS) % 2) ? ft_fillbegin_o(data, str, s)
 			: ft_fillend_o(data, str, s);
 	(*k)++;
-	ft_putstr_buf(str, data->buf);
+	ft_putstr_buf(str, data->buf, data);
 	free(str);
 	free(s);
 	return (0);
@@ -51,17 +51,16 @@ char		*ft_fillbegin_o(t_printf *data, char *str, char *num)
 	width = data->width;
 	prec = data->precision;
 	i = 0;
-	if ((data->flags >> TO_SHARP) % 2
-	&& *num != '0' && (data->precision <= digits))
+	if ((data->flags >> TO_SHARP) % 2 && *num != '0'
+	&& (data->precision <= digits))
 		str[i++] = '0';
 	fill_zeros(&prec, digits, &i, str);
 	while (*num)
 		str[i++] = *(num++);
 	max = (digits > data->precision) ? digits : data->precision;
-	if ((data->flags >> TO_SHARP) % 2 && (data->precision <= digits))
-		max += 1;
-	while (width-- > max)
-		str[i++] = ' ';
+	max += ((data->flags >> TO_SHARP) % 2
+			&& (data->precision <= digits)) ? 1 : 0;
+	fill_spaces(&width, max, &i, str);
 	return (str);
 }
 
@@ -80,42 +79,56 @@ char		*ft_fillend_o(t_printf *data, char *str, char *num)
 		digits++;
 	i = 0;
 	max = (digits > data->precision) ? digits : data->precision;
-	if (((data->flags >> TO_ZERO) % 2) && (data->precision == NO_PRECISION))
-		fill_zeros(&width, max, &i, str);
-	else
-		while (width-- > max)
-			str[i++] = ' ';
+	(((data->flags >> TO_ZERO) % 2) && (data->precision == NO_PRECISION))
+	? fill_zeros(&width, max, &i, str) : fill_spaces(&width, max, &i, str);
 	if ((data->flags >> TO_SHARP) % 2 && (data->precision <= digits))
 		str[i++] = '0';
-	((data->flags >> TO_ZERO) % 2 && data->precision == NO_PRECISION)
-	? fill_zeros(&width, max, &i, str) : fill_zeros(&prec, digits, &i, str);
+	((data->flags >> TO_ZERO) % 2 && data->precision == NO_PRECISION) ?
+	fill_zeros(&width, max, &i, str) : fill_zeros(&prec, digits, &i, str);
 	while (*num)
 		str[i++] = *(num++);
 	return (str);
 }
 
-int			put_data_zero_o(t_printf *data, int *k)
+int			put_data_zero_o_prec(t_printf *data, int *k)
 {
 	int width;
 	int prec;
 
 	prec = data->precision;
 	width = data->width;
-	if (data->precision != NO_PRECISION)
+	if ((data->flags >> TO_SHARP) % 2 && data->precision == 0
+	&& data->width != 0 && (prec = 1))
+		data->precision = 1;
+	help_o_prec(data, &prec, &width);
+	data->count_char += (data->precision > data->width) ?
+			data->precision : data->width;
+	if (data->format[*k] == 'o' && (data->flags >> TO_SHARP) % 2
+	&& data->precision == 0 && data->width == 0)
 	{
-		if ((data->flags >> TO_SHARP) % 2 && data->precision == 0
-		&& data->width != 0 && (prec = 1))
-			data->precision = 1;
-		((data->flags >> TO_MINUS) % 2) ? action1_x(data, &prec, &width, 1)
-		: action1_x(data, &prec, &width, 0);
-		data->count_char += (data->precision > data->width)
-				? data->precision : data->width;
-		if ((data->flags >> TO_SHARP) % 2 && data->precision == 0
-		&& data->width == 0 && (data->count_char++))
-			ft_putchar_buf('0', data->buf);
+		ft_putchar_buf('0', data->buf, data);
+		data->count_char++;
 	}
-	else
-		help_x_noprec(data);
+	(*k)++;
+	return (0);
+}
+
+int			put_data_zero_o(t_printf *data, int *k)
+{
+	int width;
+	int prec;
+	int max;
+
+	prec = data->precision;
+	width = data->width;
+	if (data->precision != NO_PRECISION)
+		return (put_data_zero_o_prec(data, k));
+	help_o_no_prec(data, &width);
+	max = (data->precision > data->width) ? data->precision : data->width;
+	if ((data->flags >> TO_SHARP) % 2 && data->precision == NO_PRECISION
+	&& data->width == 0)
+		max = 1;
+	data->count_char += (data->width != 0) ? max : 1;
 	(*k)++;
 	return (0);
 }
