@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/06 19:38:38 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/07 13:43:30 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/08 16:59:16 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int			edge_di(t_printf *data, int *k)
 {
-	ft_putstr_buf("-9223372036854775808", data->buf);
+	ft_putstr_buf("-9223372036854775808", data->buf, data);
 	data->count_char += 20;
 	(*k)++;
 	return (0);

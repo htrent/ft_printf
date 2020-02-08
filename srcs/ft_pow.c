@@ -1,23 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bzero.c                                            :+:      :+:    :+:   */
+/*   ft_pow.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/05 13:30:18 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/07 13:43:30 by htrent           ###   ########.fr       */
+/*   Created: 2020/02/08 15:57:09 by htrent            #+#    #+#             */
+/*   Updated: 2020/02/08 15:57:09 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void	ft_bzero(void *s, size_t n)
+intmax_t	ft_pow_10(int n)
 {
-	void	*begin;
+	int		i;
+	int64_t	num;
 
-	begin = s;
-	while (n--)
-		*(char *)s++ = 0;
-	s = begin;
+	num = 1;
+	i = 0;
+	while (i < n)
+	{
+		num *= 10;
+		i++;
+	}
+	return (num);
+}
+
+uintmax_t	ft_pow_10_u(int n)
+{
+	int		i;
+	int64_t	num;
+
+	num = 1;
+	i = 0;
+	while (i < n)
+	{
+		num *= 10;
+		i++;
+	}
+	return (num);
 }

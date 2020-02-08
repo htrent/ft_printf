@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/07 13:43:30 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/07 20:09:56 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ int main() {
 	int p;
 	long long *ll_p;
 	int *i_p;
+	char *s;
+
+	s = NULL;
 
 	ll_p = &ll_x;
 	i_p = &i_x;
@@ -37,7 +40,7 @@ int main() {
 	u_x = -42;
 	Lf_x = 1.123123123123123123123123123123123123123123;
 																							ft_printf("    ft_printf: ");
-	ftp = ft_printf("\"%lf\"", (double)Lf_x);														printf("\nret_ft_printf: %d\n", ftp - 2);printf("       printf: ");
-	p   =    printf("\"%.100Lf\"", Lf_x);														printf("\n   ret_printf: %d\n", p - 2);
+	ftp = ft_printf("\"%#.0o\"", 0);														printf("\nret_ft_printf: %d\n", ftp - 2);printf("       printf: ");
+	p   =    printf("\"%#.0o\"", 0);														printf("\n   ret_printf: %d\n", p - 2);
 	return 0;
 }

@@ -14,8 +14,8 @@
 
 char	*ft_str_to_upper(char *str)
 {
-	int i;
-	char c;
+	int		i;
+	char	c;
 
 	if (!str)
 		return (NULL);

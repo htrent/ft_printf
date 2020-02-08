@@ -36,4 +36,3 @@ int	manage_flags(t_printf *data, int *k)
 	}
 	return (1);
 }
-

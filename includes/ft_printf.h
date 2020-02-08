@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:54 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/07 14:10:50 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/08 18:22:43 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define Z_SIZE			7
 # define T_SIZE			8
 
-# define BUFF_SIZE		100
+# define BUFF_SIZE		1000
 
 # define NUM_SIZE		4940
 # define POW_5_27	7450580596923828125
@@ -63,6 +63,7 @@ typedef	struct		s_printf
 	int				precision;
 	int 			size;
 	int 			count_char;
+	int 			count_buf;
 	char			buf[BUFF_SIZE + 1];
 }					t_printf;
 
@@ -89,8 +90,9 @@ char					*ft_str_to_upper(char *str);
 void					ft_bzero(void *s, size_t n);
 void					*ft_memset(void *b, int c, size_t len);
 
-void	ft_putstr_buf(char *str, char buf[BUFF_SIZE + 1]);
-void	ft_putchar_buf(char c, char buf[BUFF_SIZE + 1]);
+void					ft_putstr_buf(char *str, char buf[BUFF_SIZE], t_printf *data);
+void					ft_putchar_buf(char c, char buf[BUFF_SIZE], t_printf *data);
+void					ft_putstr_pft(char buf[BUFF_SIZE], t_printf *data);
 
 t_printf				*init_data(const char *format);
 int						put_data(t_printf *data, int *k);
@@ -140,4 +142,15 @@ void					action2_x(t_printf *data, int *width, int key);
 void					help_x_noprec(t_printf *data);
 void					check_sharp(t_printf *data, char *str, int *i);
 int						parse_args(t_printf *data, int *k, uintmax_t num);
+int						put_data_s_null(t_printf *data, int *k);
+void					help1_s(char *buf, int *prec, int *i, char *s);
+void 					help2_s(t_printf *data, int n, int *i, char *buf);
+void					help3_s(t_printf *data, int n, int *i, char *buf);
+int						init_s(t_printf *data, int *prec, int *n, char *s);
+void					fill_spaces(int *a, int b, int *i, char *s);
+int						init_p(t_printf *data, char *s, int *n, int *i);
+int						init_c(t_printf *data, int *i);
+int						init_c_zero(t_printf *data, int *i, int *width);
+void					help_o_prec(t_printf *data, int *prec, int *width);
+void					help_o_no_prec(t_printf *data, int *width);
 #endif
