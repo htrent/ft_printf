@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:54 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/08 18:22:43 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/08 21:06:35 by ffood            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,4 +153,13 @@ int						init_c(t_printf *data, int *i);
 int						init_c_zero(t_printf *data, int *i, int *width);
 void					help_o_prec(t_printf *data, int *prec, int *width);
 void					help_o_no_prec(t_printf *data, int *width);
+void 					pow_five_calc(char *big_five, int power, int j);
+void 					pow_five_sum(char *big_five, char *big_num, int i, int j);
+int  					count_start(char *big_five, char *big_num, int power);
+void					add_pow_five(char big_num[NUM_SIZE], int power);
+void					pow_two_under_64(int power, char *big_num);
+void					array_sum(char *big_two, char *big_num, int j);
+void					array_power(int power, char *big_two, int i);
+void 					pow_two_over_64(char *big_num, char *big_two, int power);
+void					add_pow_two(char big_num[NUM_SIZE], int power);
 #endif

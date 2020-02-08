@@ -1,14 +1,14 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: htrent <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: ffood <ffood@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/06 18:03:43 by htrent            #+#    #+#              #
-#    Updated: 2019/09/17 18:23:54 by htrent           ###   ########.fr        #
+#    Updated: 2020/02/08 21:07:51 by ffood            ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 .PHONY: $(NAME) all compile fclean clean re
 
@@ -59,7 +59,8 @@ SOURCES_LIST = ft_atoi.c \
 	   help_utils_di.c \
 	   help_utils_x.c \
 	   help_utils_s.c \
-	   help_utils_o.c
+	   help_utils_o.c \
+	   power_five.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/
