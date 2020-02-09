@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:54:22 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/08 16:53:30 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/09 20:10:14 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ uintmax_t		init_size_oux(t_printf *data)
 	return (num);
 }
 
-int				put_data_oux(t_printf *data, int *k)
+int				put_data_ouxb(t_printf *data, int *k)
 {
 	uintmax_t	num;
 	char		*s;
@@ -42,7 +42,7 @@ int				put_data_oux(t_printf *data, int *k)
 	int			digits;
 
 	num = init_size_oux(data);
-	if (ft_strchr("ouU", data->format[*k]) || num == 0)
+	if (ft_strchr("ouUbB", data->format[*k]) || num == 0)
 		return (parse_args(data, k, num));
 	s = ft_utoa_base(num, 16);
 	digits = ft_strlen(s);

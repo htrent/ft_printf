@@ -80,5 +80,7 @@ int		parse_args(t_printf *data, int *k, uintmax_t num)
 		return (put_data_u(data, k, num));
 	if (data->format[*k] == 'o')
 		return (put_data_o(data, k, num));
+	if (data->format[*k] == 'b' || data->format[*k] == 'B')
+		return (put_data_b(data, k, num));
 	return (put_data_zero(data, k));
 }

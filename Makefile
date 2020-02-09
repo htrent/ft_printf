@@ -6,7 +6,7 @@
 #    By: ffood <ffood@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/06 18:03:43 by htrent            #+#    #+#              #
-#    Updated: 2020/02/08 21:07:51 by ffood            ###   ########.fr        #
+#    Updated: 2020/02/09 20:39:01 by htrent           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,7 +60,9 @@ SOURCES_LIST = ft_atoi.c \
 	   help_utils_x.c \
 	   help_utils_s.c \
 	   help_utils_o.c \
-	   power_five.c
+	   power_five.c \
+	   put_b.c \
+	   help_utils_b.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/
