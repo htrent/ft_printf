@@ -6,7 +6,7 @@
 /*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:54 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/09 20:38:45 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/11 17:51:16 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 
 # define BUFF_SIZE		1000
 
-# define NUM_SIZE		4940
+# define NUM_SIZE		49400
 # define POW_5_27	7450580596923828125
 
 typedef	struct		s_printf
@@ -174,5 +174,6 @@ void					array_sum(char *big_two, char *big_num, int j);
 void					array_power(int power, char *big_two, int i);
 void 					pow_two_over_64(char *big_num, char *big_two, int power);
 void					add_pow_two(char big_num[NUM_SIZE], int power);
-int						put_data_k(t_printf *data, int *k);
+int						put_data_r(t_printf *data, int *k);
+int						manage_color(t_printf *data, int *k);
 #endif

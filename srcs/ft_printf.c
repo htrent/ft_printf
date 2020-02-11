@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:39 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/09 20:12:26 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/11 17:53:45 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int 	put_data(t_printf *data, int *k)
 {
 	//printf("\'%c\', %d", data->format[*k], *k);
 	//printf("\nflags:%d width:%d precision:%d size:%d char:\"%c\"\n", data->flags, data->width, data->precision, data->size, data->format[*k]);
-	if (data->format[*k] && ft_strchr("csegfFpdiouUxXbBk", data->format[*k]) != NULL)
+	if (data->format[*k] && ft_strchr("csegfFpdiouUxXbBr", data->format[*k]) != NULL)
 	{
 		if (data->format[*k] == 'd' || data->format[*k] == 'i')
 			put_data_di(data, k);
@@ -49,8 +49,8 @@ int 	put_data(t_printf *data, int *k)
 			put_data_s(data, k);
 		else if (data->format[*k] == 'f')
 			put_data_f(data, k);
-		else if (data->format[*k] == 'k')
-			put_data_k(data, k);
+		else if (data->format[*k] == 'r')
+			put_data_r(data, k);
 		return (0);
 	}
 	else if (data->format[*k] && ft_strchr("q \'\"", data->format[*k]) == NULL)
@@ -69,7 +69,7 @@ int 	manage_var(t_printf *data, int *k) ///add errors if return 1!!!
 	{
 		if (!(ft_is_flag(data->format[*k]) == 0 && ft_is_size(data->format[*k]) == 0 && ft_isdigit(data->format[*k]) == 0
 		&& data->format[*k] != '*' && data->format[*k] != '.'))
-			while (data->format[*k] && ft_strchr("csegfFpdiouUxXbBk%", data->format[*k]) == NULL)
+			while (data->format[*k] && ft_strchr("csegfFpdiouUxXbB%", data->format[*k]) == NULL)
 			{
 				//printf("\nflags:%d width:%d precision:%d size:%d char:\"%c\" %d\n", data->flags, data->width, data->precision, data->size, data->format[*k], i);
 				//printf("\'%c\'", data->format[*k]);
@@ -120,6 +120,8 @@ int	ft_printf(const char *format, ...)
 			if (data->format[i] == '\0' || manage_var(data, &i))
 				break ;
 		}
+		else if (data->format[i] == '{' && manage_color(data, &i))
+			continue;
 		else
 		{
 			data->count_char++;
@@ -127,6 +129,7 @@ int	ft_printf(const char *format, ...)
 			i++;
 		}
 	}
+
 	va_end(data->params);
 	ft_putstr_pft(data->buf, data);
 	return (data->count_char);
