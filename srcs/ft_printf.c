@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:39 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/11 17:53:45 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/12 15:55:45 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int 	manage_var(t_printf *data, int *k) ///add errors if return 1!!!
 	if (data->format[*k])
 	{
 		if (!(ft_is_flag(data->format[*k]) == 0 && ft_is_size(data->format[*k]) == 0 && ft_isdigit(data->format[*k]) == 0
-		&& data->format[*k] != '*' && data->format[*k] != '.'))
+		&& ft_strchr("*._'", data->format[*k]) == NULL))
 			while (data->format[*k] && ft_strchr("csegfFpdiouUxXbB%", data->format[*k]) == NULL)
 			{
 				//printf("\nflags:%d width:%d precision:%d size:%d char:\"%c\" %d\n", data->flags, data->width, data->precision, data->size, data->format[*k], i);
@@ -84,8 +84,8 @@ int 	manage_var(t_printf *data, int *k) ///add errors if return 1!!!
 					i = 1;
 				if (manage_size(data, k) == 0)
 					i = 1;
-				if ((ft_is_flag(data->format[*k]) == 0 && ft_is_size(data->format[*k]) == 0 && ft_isdigit(data->format[*k]) == 0
-					  && data->format[*k] != '*' && data->format[*k] != '.' && data->format[*k] != '%'))
+				if (ft_is_flag(data->format[*k]) == 0 && ft_is_size(data->format[*k]) == 0 && ft_isdigit(data->format[*k]) == 0
+					  && ft_strchr("*.%_'", data->format[*k]) == NULL)
 					break ;
 				if (i == 0 && data->format[*k])
 					(*k)++;
