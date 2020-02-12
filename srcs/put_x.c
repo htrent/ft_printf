@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:54:22 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/09 20:10:14 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int				put_data_ouxb(t_printf *data, int *k)
 		str = ft_str_to_upper(str);
 	(*k)++;
 	ft_putstr_buf(str, data->buf, data);
-	free(str);
 	free(s);
 	return (0);
 }

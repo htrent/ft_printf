@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:54:07 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/08 19:08:49 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ char			*init_data_p(t_printf *data, int *i)
 	char		*s;
 
 	num = (unsigned long long)va_arg(data->params, unsigned long long);
-	s = ft_utoa_base_p(num, 16, data);
+	if (!(s = ft_utoa_base_p(num, 16, data)))
+		return (NULL);
 	*i = 0;
 	return (s);
 }
@@ -48,16 +49,17 @@ int				put_data_p_no_minus(t_printf *data, int *k)
 	int		n;
 	int		digits;
 
-	s = init_data_p(data, &i);
-	str = ft_strnew(init_p(data, s, &n, &digits));
+	if (!(s = init_data_p(data, &i)))
+		return (1);
+	if (!(str = ft_strnew(init_p(data, s, &n, &digits))) && ft_memdel((void **)&s))
+		return (1);
 	fill_spaces(&(data->width), n, &i, str);
 	add_p(str, &i);
 	fill_zeros(&(data->precision), digits, &i, str);
-	while (*s)
-		str[i++] = *(s++);
+	move_str(str, s, &i);
 	(*k)++;
 	ft_putstr_buf(str, data->buf, data);
-	free(str);
+	free(s);
 	return (0);
 }
 
@@ -74,12 +76,11 @@ int				put_data_p(t_printf *data, int *k)
 	s = init_data_p(data, &i);
 	str = ft_strnew(init_p(data, s, &n, &digits));
 	add_p(str, &i);
-	while (*s)
-		str[i++] = *(s++);
+	move_str(str, s, &i);
 	fill_zeros(&(data->precision), digits, &i, str);
 	fill_spaces(&(data->width), n, &i, str);
 	(*k)++;
 	ft_putstr_buf(str, data->buf, data);
-	free(str);
+	free(s);
 	return (0);
 }

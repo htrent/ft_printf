@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 16:01:56 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/08 18:22:10 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int		put_data_zero_c(t_printf *data, int *k)
 	int		i;
 	int		width;
 
-	s = ft_strnew(init_c_zero(data, &i, &width));
+	if (!(s = ft_strnew(init_c_zero(data, &i, &width))))
+		return (1);
 	if ((data->flags >> TO_MINUS) % 2 == 0)
 	{
 		while (width-- > 1)
@@ -44,7 +45,6 @@ int		put_data_zero_c(t_printf *data, int *k)
 			s[i++] = ' ';
 		ft_putstr_buf(s, data->buf, data);
 	}
-	free(s);
 	(*k)++;
 	return (0);
 }

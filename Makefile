@@ -6,7 +6,7 @@
 #    By: ffood <ffood@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/06 18:03:43 by htrent            #+#    #+#              #
-#    Updated: 2020/02/11 15:26:30 by htrent           ###   ########.fr        #
+#    Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SOURCES_LIST = ft_atoi.c \
 	   ft_strjoin.c \
 	   ft_strlen.c \
 	   ft_strnew.c \
+	   ft_memdel.c \
 	   ft_toupper.c \
 	   ft_atoi_base.c \
 	   ft_bzero.c \
@@ -64,7 +65,8 @@ SOURCES_LIST = ft_atoi.c \
 	   put_b.c \
 	   help_utils_b.c \
 	   put_r.c \
-	   color.c
+	   color.c \
+	   help_utils_p.c
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 
 OBJECTS_DIRECTORY = objects/

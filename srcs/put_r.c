@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 15:22:11 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/11 16:53:07 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int					put_data_r(t_printf *data, int *k)
 	buf[j] = '@';
 	data->count_char += ft_strlen(s);
 	ft_putstr_buf(buf, data->buf, data);
-	free(buf);
 	(*k)++;
 	return (0);
 }

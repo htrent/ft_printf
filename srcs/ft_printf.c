@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:39 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/12 15:55:45 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ t_printf	*init_data(const char *format)
 	int i;
 
 	i = 0;
-	data = (t_printf *)malloc(sizeof(t_printf));
+	if (!(data = (t_printf *)malloc(sizeof(t_printf))))
+		return (NULL);
 	data->format = (char *)format;
 	data->count_char = 0;
 	data->flags = 32;
@@ -29,6 +30,14 @@ t_printf	*init_data(const char *format)
 	while (i < BUFF_SIZE)
 		data->buf[i++] = '\0';
 	return (data);
+}
+
+static void		reinit_data(t_printf  *data)
+{
+	data->flags = 32;
+	data->size = 0;
+	data->precision = -1;
+	data->width = 0;
 }
 
 int 	put_data(t_printf *data, int *k)
@@ -104,7 +113,8 @@ int	ft_printf(const char *format, ...)
 	t_printf	*data;
 	int i;
 
-	data = init_data(format);
+	if (!(data = init_data(format)))
+		return (0);
 	i = 0;
 	va_start(data->params, format);
 	while (data->format[i])
@@ -112,10 +122,7 @@ int	ft_printf(const char *format, ...)
 		if (data->format[i] == '%')
 		{
 			i++;
-			data->flags = 32;
-			data->size = 0;
-			data->precision = -1;
-			data->width = 0;
+			reinit_data(data);
 			//printf("\'%c\'\n", data.format[i]);
 			if (data->format[i] == '\0' || manage_var(data, &i))
 				break ;

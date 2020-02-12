@@ -6,7 +6,7 @@
 /*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:54 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/11 17:51:16 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ char 					*ft_utoa_base(uintmax_t num, int base);
 char					*ft_str_to_upper(char *str);
 void					ft_bzero(void *s, size_t n);
 void					*ft_memset(void *b, int c, size_t len);
+int						ft_memdel(void **ap);
 
 void					ft_putstr_buf(char *str, char buf[BUFF_SIZE], t_printf *data);
 void					ft_putchar_buf(char c, char buf[BUFF_SIZE], t_printf *data);
@@ -176,4 +177,5 @@ void 					pow_two_over_64(char *big_num, char *big_two, int power);
 void					add_pow_two(char big_num[NUM_SIZE], int power);
 int						put_data_r(t_printf *data, int *k);
 int						manage_color(t_printf *data, int *k);
+void					move_str(char *str, char *s, int *i);
 #endif
