@@ -6,7 +6,11 @@
 /*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:54 by htrent            #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2020/02/22 16:04:15 by ffood            ###   ########.fr       */
+=======
 /*   Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr       */
+>>>>>>> a046d491eeafd6d350d7f40dc12a659472ee962a
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +55,7 @@
 
 # define BUFF_SIZE		1000
 
-# define NUM_SIZE		49400
+# define NUM_SIZE		20000
 # define POW_5_27	7450580596923828125
 
 typedef	struct		s_printf

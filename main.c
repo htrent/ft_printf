@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/14 16:38:56 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/22 17:21:45 by ffood            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,15 @@ int main() {
 	f_x = 123.123;
 	u_x = -42;
 	Lf_x = 1.123123123123123123123123123123123123123123;
+<<<<<<< HEAD
 	                                                                                                //ft_printf("    ft_printf: ");
 	ftp = ft_printf("\"%d %r\"\n", 111111, "hi me");                                                //printf("\nret_ft_printf: %d\n", ftp - 2);printf("       printf: ");
 	p   =    printf("\"%d %r\"\n", 1234456);                                                       //printf("\n   ret_printf: %d\n", p - 2);
+=======
+															//								//ft_printf("    ft_printf: ");
+	ftp = ft_printf("%.1000f\n", DBL_MIN * 10000) ;
+	p = printf("%.1000f", DBL_MIN * 10000) ;//														printf("\nret_ft_printf: %d\n", ftp - 2);printf("       printf: ");
+	//p   =    printf("\"%.17Lf\"", LDBL_MIN);														printf("\n   ret_printf: %d\n", p - 2);
+>>>>>>> 1f09ac3fa0aa3f73c6dca8c69f3fdf471d3e3a1d
 	return 0;
 }
