@@ -6,11 +6,7 @@
 /*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:54 by htrent            #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2020/02/22 16:04:15 by ffood            ###   ########.fr       */
-=======
-/*   Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr       */
->>>>>>> a046d491eeafd6d350d7f40dc12a659472ee962a
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +65,7 @@ typedef	struct		s_printf
 	int 			count_char;
 	int 			count_buf;
 	char			buf[BUFF_SIZE];
+
 }					t_printf;
 /*
 typedef struct		s_date
@@ -182,4 +179,7 @@ void					add_pow_two(char big_num[NUM_SIZE], int power);
 int						put_data_r(t_printf *data, int *k);
 int						manage_color(t_printf *data, int *k);
 void					move_str(char *str, char *s, int *i);
+
+void	print_buf1(char big[NUM_SIZE]);
+void	print_buf2(char big[NUM_SIZE]);
 #endif
