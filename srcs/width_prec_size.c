@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:58 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/08 15:46:57 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/12 15:52:31 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ int			manage_width(t_printf *data, int *k)
 			while (ft_isdigit(data->format[*k]))
 				(*k)++;
 		}
+		return (0);
 	}
-	return (0);
+	return (1);
 }
 
 int			manage_precision(t_printf *data, int *k)
@@ -74,6 +75,8 @@ static int	help_manage_size(t_printf *data, int *k)
 		data->size = J_SIZE;
 	else if (data->format[*k] == 'z' && ((*k)++))
 		data->size = Z_SIZE;
+	else if (ft_strchr("hLjz", data->format[*k]) == NULL)
+		return (0);
 	return (1);
 }
 
@@ -94,7 +97,7 @@ int			manage_size(t_printf *data, int *k)
 		else if (ft_strchr("diouxXfcspeg", data->format[*k]) != NULL
 		&& data->size == 0)
 			data->size = NO_SIZE;
-		else
+		else if (ft_strchr("lhLjz", data->format[*k]) == NULL)
 			return (1);
 		return (0);
 	}

@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:39 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/08 18:33:22 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ t_printf	*init_data(const char *format)
 	int i;
 
 	i = 0;
-	data = (t_printf *)malloc(sizeof(t_printf));
+	if (!(data = (t_printf *)malloc(sizeof(t_printf))))
+		return (NULL);
 	data->format = (char *)format;
 	data->count_char = 0;
 	data->flags = 32;
@@ -31,16 +32,24 @@ t_printf	*init_data(const char *format)
 	return (data);
 }
 
+static void		reinit_data(t_printf  *data)
+{
+	data->flags = 32;
+	data->size = 0;
+	data->precision = -1;
+	data->width = 0;
+}
+
 int 	put_data(t_printf *data, int *k)
 {
 	//printf("\'%c\', %d", data->format[*k], *k);
 	//printf("\nflags:%d width:%d precision:%d size:%d char:\"%c\"\n", data->flags, data->width, data->precision, data->size, data->format[*k]);
-	if (data->format[*k] && ft_strchr("csegfFpdiouUxX", data->format[*k]) != NULL)
+	if (data->format[*k] && ft_strchr("csegfFpdiouUxXbBr", data->format[*k]) != NULL)
 	{
 		if (data->format[*k] == 'd' || data->format[*k] == 'i')
 			put_data_di(data, k);
-		else if (ft_strchr("ouUxX", data->format[*k]) != NULL)
-			put_data_oux(data, k);
+		else if (ft_strchr("ouUxXbB", data->format[*k]) != NULL)
+			put_data_ouxb(data, k);
 		else if (data->format[*k] == 'p')
 			put_data_p(data, k);
 		else if (data->format[*k] == 'c')
@@ -49,6 +58,8 @@ int 	put_data(t_printf *data, int *k)
 			put_data_s(data, k);
 		else if (data->format[*k] == 'f')
 			put_data_f(data, k);
+		else if (data->format[*k] == 'r')
+			put_data_r(data, k);
 		return (0);
 	}
 	else if (data->format[*k] && ft_strchr("q \'\"", data->format[*k]) == NULL)
@@ -66,8 +77,8 @@ int 	manage_var(t_printf *data, int *k) ///add errors if return 1!!!
 	if (data->format[*k])
 	{
 		if (!(ft_is_flag(data->format[*k]) == 0 && ft_is_size(data->format[*k]) == 0 && ft_isdigit(data->format[*k]) == 0
-		&& data->format[*k] != '*' && data->format[*k] != '.'))
-			while (data->format[*k] && ft_strchr("csegfFpdiouUxX%", data->format[*k]) == NULL)
+		&& ft_strchr("*._'", data->format[*k]) == NULL))
+			while (data->format[*k] && ft_strchr("csegfFpdiouUxXbB%", data->format[*k]) == NULL)
 			{
 				//printf("\nflags:%d width:%d precision:%d size:%d char:\"%c\" %d\n", data->flags, data->width, data->precision, data->size, data->format[*k], i);
 				//printf("\'%c\'", data->format[*k]);
@@ -82,8 +93,8 @@ int 	manage_var(t_printf *data, int *k) ///add errors if return 1!!!
 					i = 1;
 				if (manage_size(data, k) == 0)
 					i = 1;
-				if ((ft_is_flag(data->format[*k]) == 0 && ft_is_size(data->format[*k]) == 0 && ft_isdigit(data->format[*k]) == 0
-					  && data->format[*k] != '*' && data->format[*k] != '.' && data->format[*k] != '%'))
+				if (ft_is_flag(data->format[*k]) == 0 && ft_is_size(data->format[*k]) == 0 && ft_isdigit(data->format[*k]) == 0
+					  && ft_strchr("*.%_'", data->format[*k]) == NULL)
 					break ;
 				if (i == 0 && data->format[*k])
 					(*k)++;
@@ -102,7 +113,8 @@ int	ft_printf(const char *format, ...)
 	t_printf	*data;
 	int i;
 
-	data = init_data(format);
+	if (!(data = init_data(format)))
+		return (0);
 	i = 0;
 	va_start(data->params, format);
 	while (data->format[i])
@@ -110,14 +122,13 @@ int	ft_printf(const char *format, ...)
 		if (data->format[i] == '%')
 		{
 			i++;
-			data->flags = 32;
-			data->size = 0;
-			data->precision = -1;
-			data->width = 0;
+			reinit_data(data);
 			//printf("\'%c\'\n", data.format[i]);
 			if (data->format[i] == '\0' || manage_var(data, &i))
 				break ;
 		}
+		else if (data->format[i] == '{' && manage_color(data, &i))
+			continue;
 		else
 		{
 			data->count_char++;
@@ -125,6 +136,7 @@ int	ft_printf(const char *format, ...)
 			i++;
 		}
 	}
+
 	va_end(data->params);
 	ft_putstr_pft(data->buf, data);
 	return (data->count_char);

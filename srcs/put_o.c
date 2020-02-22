@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:54:14 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/08 19:49:13 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,20 @@ int			put_data_o(t_printf *data, int *k, uintmax_t num)
 
 	if (num == 0)
 		return (put_data_zero_o(data, k));
-	s = ft_utoa_base(num, 8);
+	if (!(s = ft_utoa_base(num, 8)))
+		return (1);
 	digits = ft_strlen(s);
 	if ((data->flags >> TO_SHARP) % 2)
 		digits++;
 	n = (data->precision > digits) ? data->precision : digits;
 	max = (n > data->width) ? n : data->width;
-	str = ft_strnew(max);
+	if (!(str = ft_strnew(max)) && ft_memdel((void**)&s))
+		return (1);
 	data->count_char += max;
 	str = ((data->flags >> TO_MINUS) % 2) ? ft_fillbegin_o(data, str, s)
 			: ft_fillend_o(data, str, s);
 	(*k)++;
 	ft_putstr_buf(str, data->buf, data);
-	free(str);
 	free(s);
 	return (0);
 }
@@ -72,7 +73,8 @@ char		*ft_fillend_o(t_printf *data, char *str, char *num)
 	int max;
 	int digits;
 
-	digits = ft_strlen(num);
+	if (!(digits = ft_strlen(num)))
+		return (NULL);
 	width = data->width;
 	prec = data->precision;
 	if ((data->flags >> TO_SHARP) % 2 && prec < digits)

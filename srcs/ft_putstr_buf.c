@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 15:55:17 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/08 18:01:44 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,18 @@ void	ft_putstr_pft(char buf[BUFF_SIZE], t_printf *data)
 void	ft_putstr_buf(char *str, char buf[BUFF_SIZE], t_printf *data)
 {
 	int i;
+	int j;
 
+	j = 0;
 	i = 0;
 	while (i < data->count_buf && i < BUFF_SIZE - 1)
 		i++;
-	while (*str)
+	while (str[j])
 	{
-		while (i < BUFF_SIZE - 1 && *str)
+		while (i < BUFF_SIZE - 1 && str[j])
 		{
-			buf[i] = *str;
-			str++;
+			buf[i] = str[j];
+			j++;
 			i++;
 			data->count_buf++;
 		}
@@ -48,4 +50,5 @@ void	ft_putstr_buf(char *str, char buf[BUFF_SIZE], t_printf *data)
 			i = 0;
 		}
 	}
+	free(str);
 }

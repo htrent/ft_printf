@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/08 16:52:40 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	ft_fillbegin_u(t_printf *data, uintmax_t num, char *s, int digits)
 	while (j++ < data->width - max)
 		s[i++] = ' ';
 	ft_putstr_buf(s, data->buf, data);
-	free(s);
 }
 
 void	ft_fillend_u(t_printf *data, intmax_t num, char *s, int dig)
@@ -85,5 +84,4 @@ void	ft_fillend_u(t_printf *data, intmax_t num, char *s, int dig)
 			dig--;
 		}
 	ft_putstr_buf(s, data->buf, data);
-	free(s);
 }

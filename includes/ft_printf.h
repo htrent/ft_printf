@@ -6,7 +6,11 @@
 /*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:54 by htrent            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2020/02/22 16:04:15 by ffood            ###   ########.fr       */
+=======
+/*   Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr       */
+>>>>>>> a046d491eeafd6d350d7f40dc12a659472ee962a
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +70,16 @@ typedef	struct		s_printf
 	int 			count_buf;
 	char			buf[BUFF_SIZE + 1];
 }					t_printf;
-
-
+/*
+typedef struct		s_date
+{
+	int				year;
+	int 			month;
+	int 			day;
+	int 			hour;
+	int 			minute;
+	int 			second;
+}					t_date;*/
 
 int						ft_printf(const char *format, ...);
 size_t					ft_strlen(const char *s);
@@ -89,6 +101,7 @@ char 					*ft_utoa_base(uintmax_t num, int base);
 char					*ft_str_to_upper(char *str);
 void					ft_bzero(void *s, size_t n);
 void					*ft_memset(void *b, int c, size_t len);
+int						ft_memdel(void **ap);
 
 void					ft_putstr_buf(char *str, char buf[BUFF_SIZE], t_printf *data);
 void					ft_putchar_buf(char c, char buf[BUFF_SIZE], t_printf *data);
@@ -97,7 +110,7 @@ void					ft_putstr_pft(char buf[BUFF_SIZE], t_printf *data);
 t_printf				*init_data(const char *format);
 int						put_data(t_printf *data, int *k);
 int						manage_var(t_printf *data, int *k);
-int 					put_data_oux(t_printf *data, int *k);
+int 					put_data_ouxb(t_printf *data, int *k);
 char					*ft_fillbegin_x(t_printf *data, char *str, char *num);
 char					*ft_fillend_x(t_printf *data, char *str, char *num);
 int						put_data_zero(t_printf *data, int *k);
@@ -134,7 +147,7 @@ void					ft_itoa_di(char *s, int digits, intmax_t num, int *i);
 void					first_init_end(t_printf *data, intmax_t *num, int *i, char *s);
 intmax_t				init_size_di(t_printf *data);
 void					fill_zeros(int *a, int b, int *i, char *s);
-uintmax_t				init_size_oux(t_printf *data);
+uintmax_t				init_size_ouxb(t_printf *data);
 int						parse_args(t_printf *data, int *k, uintmax_t num);
 void					check_sharp(t_printf *data, char *str, int *i);
 void					action1_x(t_printf *data, int *prec, int *width, int key);
@@ -142,6 +155,10 @@ void					action2_x(t_printf *data, int *width, int key);
 void					help_x_noprec(t_printf *data);
 void					check_sharp(t_printf *data, char *str, int *i);
 int						parse_args(t_printf *data, int *k, uintmax_t num);
+int						put_data_b(t_printf *data, int *k, uintmax_t num);
+char					*ft_fillbegin_b(t_printf *data, char *str, char *num);
+char					*ft_fillend_b(t_printf *data, char *str, char *num);
+void					check_sharp_b(t_printf *data, char *str, int *i);
 int						put_data_s_null(t_printf *data, int *k);
 void					help1_s(char *buf, int *prec, int *i, char *s);
 void 					help2_s(t_printf *data, int n, int *i, char *buf);
@@ -162,4 +179,7 @@ void					array_sum(char *big_two, char *big_num, int j);
 void					array_power(int power, char *big_two, int i);
 void 					pow_two_over_64(char *big_num, char *big_two, int power);
 void					add_pow_two(char big_num[NUM_SIZE], int power);
+int						put_data_r(t_printf *data, int *k);
+int						manage_color(t_printf *data, int *k);
+void					move_str(char *str, char *s, int *i);
 #endif

@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 19:59:34 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/07 20:00:14 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/12 20:44:42 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,14 @@
 
 void			help1_s(char *buf, int *prec, int *i, char *s)
 {
+	int j;
+
+	j = 0;
 	while ((*prec)--)
-		buf[(*i)++] = *(s++);
+	{
+		buf[(*i)++] = s[j];
+		j++;
+	}
 }
 
 int				init_s(t_printf *data, int *prec, int *n, char *s)

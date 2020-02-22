@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/08 18:24:07 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ char		*ft_utoa_base(uintmax_t num, int base)
 
 	radix = "0123456789abcdef";
 	max_digits = ft_max_digits(num, base);
-	str = ft_strnew(max_digits);
+	if (!(str = ft_strnew(max_digits)))
+		return (NULL);
 	i = max_digits - 1;
 	while (i >= 0)
 	{
@@ -57,7 +58,8 @@ char		*ft_utoa_base_p(uintmax_t num, int base, t_printf *data)
 	radix = "0123456789abcdef";
 	max_digits = (data->precision == 0 && num == 0)
 			? 0 : ft_max_digits(num, base);
-	str = ft_strnew(max_digits);
+	if (!(str = ft_strnew(max_digits)))
+		return (NULL);
 	i = max_digits - 1;
 	while (i >= 0)
 	{
