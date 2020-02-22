@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 13:30:18 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/07 13:43:30 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/14 15:33:15 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 void	ft_bzero(void *s, size_t n)
 {
-	void	*begin;
+	size_t	i;
 
-	begin = s;
-	while (n--)
-		*(char *)s++ = 0;
-	s = begin;
+	i = 0;
+	while (i < n)
+		((char *)s)[i++] = 0;
 }

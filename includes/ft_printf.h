@@ -64,7 +64,7 @@ typedef	struct		s_printf
 	int 			size;
 	int 			count_char;
 	int 			count_buf;
-	char			buf[BUFF_SIZE + 1];
+	char			buf[BUFF_SIZE];
 }					t_printf;
 /*
 typedef struct		s_date

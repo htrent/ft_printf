@@ -40,7 +40,7 @@ int		text_colors(char *colors[], t_printf *data, int *k)
 	{
 		if (check_str(data->format, colors[i], *k))
 		{
-			ft_putstr_buf("\033[3", data->buf, data);
+			ft_putstr_buf(ft_strdup("\033[3"), data->buf, data);
 			ft_putchar_buf(i + '0', data->buf, data);
 			ft_putchar_buf('m', data->buf, data);
 			*k = *k + ft_strlen(colors[i]);
@@ -60,7 +60,7 @@ int		bg_colors(char *colors_bg[], t_printf *data, int *k)
 	{
 		if (check_str(data->format, colors_bg[i], *k))
 		{
-			ft_putstr_buf("\033[4", data->buf, data);
+			ft_putstr_buf(ft_strdup("\033[4"), data->buf, data);
 			ft_putchar_buf(i + '0', data->buf, data);
 			ft_putchar_buf('m', data->buf, data);
 			*k = *k + ft_strlen(colors_bg[i]);
@@ -84,7 +84,7 @@ int		attr(char *attribute[], t_printf *data, int *k)
 			j = i;
 			j = (i >= 3) ? j + 1 : j;
 			j = (i >= 5) ? j + 1 : j;
-			ft_putstr_buf("\033[", data->buf, data);
+			ft_putstr_buf(ft_strdup("\033["), data->buf, data);
 			ft_putchar_buf(j + '0', data->buf, data);
 			ft_putchar_buf('m', data->buf, data);
 			*k = *k + ft_strlen(attribute[i]);
