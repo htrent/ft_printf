@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/07 20:09:56 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/22 17:21:45 by ffood            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,9 @@ int main() {
 	f_x = 123.123;
 	u_x = -42;
 	Lf_x = 1.123123123123123123123123123123123123123123;
-																							ft_printf("    ft_printf: ");
-	ftp = ft_printf("\"%#.0o\"", 0);														printf("\nret_ft_printf: %d\n", ftp - 2);printf("       printf: ");
-	p   =    printf("\"%#.0o\"", 0);														printf("\n   ret_printf: %d\n", p - 2);
+															//								//ft_printf("    ft_printf: ");
+	ftp = ft_printf("%.1000f\n", DBL_MIN * 10000) ;
+	p = printf("%.1000f", DBL_MIN * 10000) ;//														printf("\nret_ft_printf: %d\n", ftp - 2);printf("       printf: ");
+	//p   =    printf("\"%.17Lf\"", LDBL_MIN);														printf("\n   ret_printf: %d\n", p - 2);
 	return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 18:00:45 by ffood             #+#    #+#             */
-/*   Updated: 2020/02/08 20:58:11 by ffood            ###   ########.fr       */
+/*   Updated: 2020/02/21 17:57:14 by ffood            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void pow_five_calc(char *big_five, int power, int j)
 {
 	int     prev_digit;
     int     digit;
-
     big_five[NUM_SIZE - 1]  = 1;
 	while (power > 0)
 	{

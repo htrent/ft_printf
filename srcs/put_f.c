@@ -6,7 +6,7 @@
 /*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 16:04:21 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/08 21:01:34 by ffood            ###   ########.fr       */
+/*   Updated: 2020/02/21 17:57:28 by ffood            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,22 @@ union code
 		unsigned long long  a61 : 1;
 		unsigned long long  a62 : 1;
 		unsigned long long  a63 : 1;
+		unsigned long long  a64 : 1;
+		unsigned long long  a65 : 1;
+		unsigned long long  a66 : 1;
+		unsigned long long  a67 : 1;
+		unsigned long long  a68 : 1;
+		unsigned long long  a69 : 1;
+		unsigned long long  a70 : 1;
+		unsigned long long  a71 : 1;
+		unsigned long long  a72 : 1;
+		unsigned long long  a73 : 1;
+		unsigned long long  a74 : 1;
+		unsigned long long  a75 : 1;
+		unsigned long long  a76 : 1;
+		unsigned long long  a77 : 1;
+		unsigned long long  a78 : 1;
+		unsigned long long  a79 : 1;
 	} byte;
 };
 
@@ -159,13 +175,11 @@ void	array_sum(char *big_two, char *big_num, int j)
 	flag = 0;
 	while (big_two[j] != -1)
 	{
-		if (big_num[j] == -1)
-			big_num[j]++;
-		if ((big_num[j] + big_two[j]) > 9)
-			flag = 1;
+		big_num[j] = (big_num[j] == -1) ? 0 : big_num[j];
+		flag = ((big_num[j] + big_two[j]) > 9) ? 1 : flag;
 		big_num[j] = (big_num[j] + big_two[j]) % 10;
-		if (prev_flag)
-			big_num[j]++;
+		flag = ((prev_flag) && (big_num[j] + 1 > 9)) ? 1 : flag;
+		big_num[j] = (prev_flag) ? (big_num[j] + 1) % 10 : big_num[j];
 		prev_flag = flag;
 		flag = 0;
 		j--;
@@ -245,6 +259,148 @@ void	add_pow_two(char big_num[NUM_SIZE], int power)
 		pow_two_over_64(big_num, big_two, power);
 }
 
+void rounding_off_2(char *big_num1, char *big_num2)
+{
+	int j;
+	int flag;
+
+	flag = 0;
+	j = NUM_SIZE - 1;
+	big_num2[0] = big_num2[0] % 10;
+	if (big_num1[j] + 1 > 9)
+			flag = 1;
+	big_num1[j] = (big_num1[j] < 0) ? 1 : big_num1[j] + 1;
+	//округление в четную сторону при .5 с точностью ноль
+	while (flag && j)
+	{
+		big_num1[j] = big_num1[j] % 10;
+		big_num1[j - 1] = (big_num1[j - 1] < 0) ? 1 : big_num1[j - 1] + 1;
+		flag = (big_num1[j - 1] > 9) ? 1 : 0;
+		j--;
+	}
+	//big_num1[j] = (big_num1[j] = -1) ? 1 : big_num1[j] + 1;
+}
+
+void rounding_off(char *big_num1, char *big_num2, t_printf *data)
+{
+	int i;
+	int flag; 
+	
+	flag = 0;
+	i = data->precision - 1;
+	if (big_num2[i + 1] >= 5 && data->precision > 0)
+	{
+		if (big_num2[i] + 1 > 9)
+			flag = 1;
+		big_num2[i]++;
+	}		
+	while (flag && i)
+	{
+		big_num2[i] = big_num2[i] % 10;
+		big_num2[i - 1]++;
+		flag = (big_num2[i - 1] > 9) ? 1 : 0;
+		i--;
+	}
+	if (flag || (data->precision == 0 && big_num2[0] >= 5))
+		rounding_off_2(big_num1, big_num2);
+}
+
+void float_fillbegin(t_printf *data, char *big_num1, char *big_num2, char *s, int len)
+{
+	int j;
+	int i;
+	
+	i = 0;
+	j = NUM_SIZE - 1;
+	if (big_num1[0] == 1)
+		s[i] = '-';
+	else if ((data->flags >> TO_PLUS) % 2)
+		s[i] = '+';
+	else if ((data->flags >> TO_SPACE) % 2 && big_num1[0] != 1)
+		s[i] = ' ';
+	i += len;
+	while (big_num1[j] != -1 && j >= 0) //целая часть с конца
+		s[--len] = big_num1[j--] + '0';
+	if (data->precision != 0 || (data->precision == 0 && (data->flags >> TO_SHARP) % 2))
+		s[i++] = '.';
+	j = 0;
+	while (j < data->precision) //дробная часть
+	{
+		s[i++] = (big_num2[j] == -1) ? '0' : big_num2[j] + '0';
+		j++;
+	}
+	while  (i < data->width)
+		s[i++] = ' ';
+	ft_putstr_buf(s, data->buf, data);
+	free(s);
+}
+
+void float_fillend(t_printf *data, char *big_num1, char *big_num2, char *s, int k)
+{
+	int j;
+	int i;
+
+	i = NUM_SIZE - 1;
+	j = data->precision - 1;
+	while (j >= 0) //дробная часть
+	{
+		s[--k] = (big_num2[j] == -1) ? '0' : big_num2[j] + '0';
+		j--;
+	}
+	if (data->precision != 0 || (data->precision == 0 && (data->flags >> TO_SHARP) % 2))
+		s[--k] = '.';
+	while (big_num1[i] != -1 && i >= NUM_SIZE - 10) //целая часть
+		s[--k] = big_num1[i--] + '0';
+	i = k - 1;
+	if ((data->flags >> TO_ZERO) % 2)
+		while (k >= 0)
+			s[--k] = '0';
+	else
+		while (k >= 0)
+			s[--k] = ' ';
+	k = ((data->flags >> TO_ZERO) % 2) ? 0 : i;
+	if (big_num1[0] == 1)
+		s[k] = '-';
+	else if ((data->flags >> TO_PLUS) % 2)
+		s[k] = '+';
+	else if ((data->flags >> TO_SPACE) % 2 && big_num1[0] != 1)
+		s[k] = ' ';
+		//printf("\n%d\n", data->precision);
+	ft_putstr_buf(s, data->buf, data);
+	free(s);
+}
+
+void print_f(t_printf *data, char *big_num1, char *big_num2)
+{
+	int len; //кол-во цифр целой части
+	int j;
+	int k;
+	char *s;
+
+	k = 0;
+	j = NUM_SIZE - 1;
+	data->precision = (data->precision == -1) ? 6 : data->precision;
+	if (big_num1[NUM_SIZE - 1] == -1)
+		big_num1[NUM_SIZE - 1]++;
+	rounding_off(big_num1, big_num2, data);
+	while (big_num1[j] != -1)
+		j--;
+	len = NUM_SIZE - 1 - j;
+	if ((data->flags >> TO_PLUS) % 2 || (data->flags >> TO_SPACE) % 2 || big_num1[0] == 1)
+		len++;
+	if (data->precision + len + 1 > data->width)
+		k = data->precision + len + 1;
+	else
+		k = data->width;
+	k = (data->precision == 0 && (data->flags >> TO_SHARP) % 2 == 0 && data->width == 0) ? k - 1 : k;
+	s = ft_strnew(k); // посчитала длину
+	if ((data->flags >> TO_MINUS) % 2)
+		float_fillbegin(data, big_num1, big_num2, s, len);
+	else
+		float_fillend(data, big_num1, big_num2, s, k);
+	j = 0;
+}
+
 int		put_data_f(t_printf *data, int *k)
 {
 	long double num;
@@ -252,46 +408,22 @@ int		put_data_f(t_printf *data, int *k)
 	union code c;
 	char	big_num1[NUM_SIZE]; //целая часть
 	char	big_num2[NUM_SIZE]; //дробная часть
-
-	//unsigned long long t;
 	int i;
 	int e;
 
 	ft_memset(big_num1, -1, NUM_SIZE);
 	ft_memset(big_num2, -1, NUM_SIZE);
+
 	if (data->size == L_UPPER_SIZE)
 		num = (long double)va_arg(data->params, long double);
 	else
-		num = (long double)va_arg(data->params, double);
+		num = (double)va_arg(data->params, double);
 	number.num = num;
 	c.p = number.bits;
-
-	printf(  "\n63 | 62  61  60  59  58  57  56  55  54  "
-			 "53  52 | 51  50  49  48  47  46  45  44  "
-			 "43  42  41  40  39  38  37  36  35  34  "
-			 "33  32  31  30  29  28  27  26  25  24  "
-			 "23  22  21  20  19  18  17  16  15  14  "
-			 "13  12  11  10  9  8  7  6  5  4  "
-			 "3  2  1  0 \n");
-	printf(  "%d  | %d   %d   %d   %d   %d   %d   %d   %d   %d   "
-			 "%d   %d  | %d   %d   %d   %d   %d   %d   %d   %d   "
-			 "%d   %d   %d   %d   %d   %d   %d   %d   %d   %d   "
-			 "%d   %d   %d   %d   %d   %d   %d   %d   %d   %d   "
-			 "%d   %d   %d   %d   %d   %d   %d   %d   %d   %d   "
-			 "%d   %d   %d   %d   %d  %d  %d  %d  %d  %d  "
-			 "%d  %d  %d  %d\n",
-			 c.byte.a63, c.byte.a62, c.byte.a61, c.byte.a60, c.byte.a59, c.byte.a58, c.byte.a57, c.byte.a56, c.byte.a55, c.byte.a54,
-			 c.byte.a53, c.byte.a52, c.byte.a51, c.byte.a50, c.byte.a49, c.byte.a48, c.byte.a47, c.byte.a46, c.byte.a45, c.byte.a44,
-			 c.byte.a43, c.byte.a42, c.byte.a41, c.byte.a40, c.byte.a39, c.byte.a38, c.byte.a37, c.byte.a36, c.byte.a35, c.byte.a34,
-			 c.byte.a33, c.byte.a32, c.byte.a31, c.byte.a30, c.byte.a29, c.byte.a28, c.byte.a27, c.byte.a26, c.byte.a25, c.byte.a24,
-			 c.byte.a23, c.byte.a22, c.byte.a21, c.byte.a20, c.byte.a19, c.byte.a18, c.byte.a17, c.byte.a16, c.byte.a15, c.byte.a14,
-			 c.byte.a13, c.byte.a12, c.byte.a11, c.byte.a10, c.byte.a9, c.byte.a8, c.byte.a7, c.byte.a6, c.byte.a5, c.byte.a4,
-			 c.byte.a3, c.byte.a2, c.byte.a1, c.byte.a0);
-
+	if (number.bits.s == 1)
+		big_num1[0] = 1;
 	i = 0;
 	e = number.bits.e - 16383;
-	printf("e: %d\n", e);
-
 	while (i < 64)
 	{
 		//printf("e-i: %d, %llu\n", (e - i), (number.bits.m >> (52 - i)) & 1);
@@ -305,15 +437,11 @@ int		put_data_f(t_printf *data, int *k)
 			if ((number.bits.m >> (63 - i)) & 1)
 				add_pow_two(big_num1, e - i);
 		}
-		//print_buf1(big_num1);
-		//print_buf2(big_num2);
 		i++;
 	}
-	print_buf1(big_num1);
-	print_buf2(big_num2);
-	//add_pow_five(big_num, 100);
-	//print_buf(big_num);
-	//printf("\"e: %d f: %f\"", e, f);
+	print_f(data, big_num1, big_num2);
+	//free(big_num1);
+	//free(big_num2);
 	(*k)++;
 	return (0);
 }
