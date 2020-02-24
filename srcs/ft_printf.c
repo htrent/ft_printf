@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:39 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/24 15:00:54 by ffood            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-t_printf	*init_data(const char *format)
+t_printf		*init_data(const char *format)
 {
-	t_printf *data;
-	int i;
+	t_printf	*data;
+	int			i;
 
 	i = 0;
 	if (!(data = (t_printf *)malloc(sizeof(t_printf))))
@@ -32,7 +32,7 @@ t_printf	*init_data(const char *format)
 	return (data);
 }
 
-static void		reinit_data(t_printf  *data)
+static void		reinit_data(t_printf *data)
 {
 	data->flags = 32;
 	data->size = 0;
@@ -40,10 +40,12 @@ static void		reinit_data(t_printf  *data)
 	data->width = 0;
 }
 
-int 	put_data(t_printf *data, int *k)
+int				put_data(t_printf *data, int *k)
 {
-	//printf("\'%c\', %d", data->format[*k], *k);
-	//printf("\nflags:%d width:%d precision:%d size:%d char:\"%c\"\n", data->flags, data->width, data->precision, data->size, data->format[*k]);
+	/*
+	**printf("\'%c\', %d", data->format[*k], *k);
+	**printf("\nflags:%d width:%d precision:%d size:%d char:\"%c\"\n", data->flags, data->width, data->precision, data->size, data->format[*k]);
+	*/
 	if (data->format[*k] && ft_strchr("csegfFpdiouUxXbBr", data->format[*k]) != NULL)
 	{
 		if (data->format[*k] == 'd' || data->format[*k] == 'i')
@@ -70,9 +72,9 @@ int 	put_data(t_printf *data, int *k)
 	return (1);
 }
 
-int 	manage_var(t_printf *data, int *k) ///add errors if return 1!!!
+int				manage_var(t_printf *data, int *k) ///add errors if return 1!!!
 {
-	int i;
+	int	i;
 
 	if (data->format[*k])
 	{
@@ -94,7 +96,7 @@ int 	manage_var(t_printf *data, int *k) ///add errors if return 1!!!
 				if (manage_size(data, k) == 0)
 					i = 1;
 				if (ft_is_flag(data->format[*k]) == 0 && ft_is_size(data->format[*k]) == 0 && ft_isdigit(data->format[*k]) == 0
-					  && ft_strchr("*.%_'", data->format[*k]) == NULL)
+				&& ft_strchr("*.%_'", data->format[*k]) == NULL)
 					break ;
 				if (i == 0 && data->format[*k])
 					(*k)++;
@@ -108,10 +110,10 @@ int 	manage_var(t_printf *data, int *k) ///add errors if return 1!!!
 	return (1);
 }
 
-int	ft_printf(const char *format, ...)
+int				ft_printf(const char *format, ...)
 {
 	t_printf	*data;
-	int i;
+	int			i;
 
 	if (!(data = init_data(format)))
 		return (0);

@@ -6,21 +6,22 @@
 /*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 18:00:45 by ffood             #+#    #+#             */
-/*   Updated: 2020/02/21 17:57:14 by ffood            ###   ########.fr       */
+/*   Updated: 2020/02/24 15:25:08 by ffood            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void pow_five_calc(char *big_five, int power, int j)
+static void		pow_five_calc(char *big_five, int power, int j)
 {
-	int     prev_digit;
-    int     digit;
-    big_five[NUM_SIZE - 1]  = 1;
+	int		prev_digit;
+	int		digit;
+
+	big_five[NUM_SIZE - 1] = 1;
 	while (power > 0)
 	{
 		j = NUM_SIZE - 1;
-        prev_digit = 0;
+		prev_digit = 0;
 		while (big_five[j] != -1)
 		{
 			digit = (big_five[j] * 5) / 10;
@@ -40,7 +41,7 @@ void pow_five_calc(char *big_five, int power, int j)
 	}
 }
 
-void pow_five_sum(char *big_five, char *big_num, int i, int j)
+static void		pow_five_sum(char *big_five, char *big_num, int i, int j)
 {
 	int flag;
 	int prev_flag;
@@ -63,50 +64,37 @@ void pow_five_sum(char *big_five, char *big_num, int i, int j)
 	}
 	while (prev_flag)
 	{
-		prev_flag = (big_num[i] + 1 > 9) ? 1 : 0;	
+		prev_flag = (big_num[i] + 1 > 9) ? 1 : 0;
 		big_num[i] = (big_num[i] + 1) % 10;
 		i--;
 	}
 }
 
-int  count_start(char *big_five, char *big_num, int power)
+static int		count_start(char *big_five, char *big_num, int power)
 {
 	int i;
 	int j;
 
 	i = 0;
-	while (big_five[i] == -1) //для кол-ва цифр
+	while (big_five[i] == -1)
 		i++;
-	i = NUM_SIZE - i; //кол-во цифр
+	i = NUM_SIZE - i;
 	j = -1;
 	while (++j < i)
 		big_num[j] = (big_num[j] == -1) ? 0 : big_num[j];
-	j = NUM_SIZE - 1; //с конца берем из big_five
+	j = NUM_SIZE - 1;
 	i = power - 1;
 	return (i);
 }
 
-void	add_pow_five(char big_num[NUM_SIZE], int power)
+void			add_pow_five(char big_num[NUM_SIZE], int power)
 {
-	char	big_five[NUM_SIZE];
-	int		i;
-	int		j;
-	unsigned long long int number;
+	char					big_five[NUM_SIZE];
+	int						i;
+	int						j;
 
 	ft_memset(big_five, -1, NUM_SIZE);
-	if (power < 28)
-		pow_five_calc(big_five, power, 0);
-	else
-	{
-		number = POW_5_27;
-		j = NUM_SIZE - 1;
-		while (number > 0) //number to array
-		{
-			big_five[j--] = number % 10;
-			number = number / 10;
-		}
-		pow_five_calc(big_five, power - 27, 0);
-	}
+	pow_five_calc(big_five, power, 0);
 	i = count_start(big_five, big_num, power);
 	j = NUM_SIZE - 1;
 	pow_five_sum(big_five, big_num, i, j);

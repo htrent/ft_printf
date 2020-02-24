@@ -6,11 +6,7 @@
 /*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2020/02/22 17:21:45 by ffood            ###   ########.fr       */
-=======
-/*   Updated: 2020/02/09 21:47:23 by htrent           ###   ########.fr       */
->>>>>>> a046d491eeafd6d350d7f40dc12a659472ee962a
+/*   Updated: 2020/02/24 13:31:15 by ffood            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +67,9 @@ int main() {
 	f_x = 123.123;
 	u_x = -42;
 	Lf_x = 1.123123123123123123123123123123123123123123;
-															//								//ft_printf("    ft_printf: ");
-	ftp = ft_printf("%.1000f\n", DBL_MIN * 10000) ;
-	p = printf("%.1000f", DBL_MIN * 10000) ;//														printf("\nret_ft_printf: %d\n", ftp - 2);printf("       printf: ");
-	//p   =    printf("\"%.17Lf\"", LDBL_MIN);														printf("\n   ret_printf: %d\n", p - 2);
+																							ft_printf("    ft_printf: ");
+	ftp = ft_printf("%.5000Lf", 1e-4935l);
+														printf("\nret_ft_printf: %d\n", ftp);printf("       printf: ");
+	p = printf("%.5000Lf", 1e-4935l);													printf("\n   ret_printf: %d\n", p);
 	return 0;
 }

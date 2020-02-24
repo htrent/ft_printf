@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_p.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:54:07 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/24 14:33:24 by ffood            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int				put_data_p_no_minus(t_printf *data, int *k)
 
 	if (!(s = init_data_p(data, &i)))
 		return (1);
-	if (!(str = ft_strnew(init_p(data, s, &n, &digits))) && ft_memdel((void **)&s))
+	if (!(str = ft_strnew(init_p(data, s, &n, &digits))) &&
+	ft_memdel((void **)&s))
 		return (1);
 	fill_spaces(&(data->width), n, &i, str);
 	add_p(str, &i);

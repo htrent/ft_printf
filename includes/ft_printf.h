@@ -6,11 +6,7 @@
 /*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:54 by htrent            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2020/02/22 16:04:15 by ffood            ###   ########.fr       */
-=======
-/*   Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr       */
->>>>>>> a046d491eeafd6d350d7f40dc12a659472ee962a
+/*   Updated: 2020/02/24 14:14:41 by ffood            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +51,7 @@
 
 # define BUFF_SIZE		1000
 
-# define NUM_SIZE		20000
+# define NUM_SIZE		60000
 # define POW_5_27	7450580596923828125
 
 typedef	struct		s_printf
@@ -69,7 +65,23 @@ typedef	struct		s_printf
 	int 			count_char;
 	int 			count_buf;
 	char			buf[BUFF_SIZE + 1];
+	int 			len_num1_2;
+	int				len_num1;
 }					t_printf;
+
+typedef	struct		s_double
+{
+	unsigned long long	m : 64;
+	unsigned long long	e : 15;
+	unsigned long long	s : 1;
+}					t_double;
+
+union				u_number
+{
+	t_double		bits;
+	long double		num;
+};
+
 /*
 typedef struct		s_date
 {
@@ -170,16 +182,11 @@ int						init_c(t_printf *data, int *i);
 int						init_c_zero(t_printf *data, int *i, int *width);
 void					help_o_prec(t_printf *data, int *prec, int *width);
 void					help_o_no_prec(t_printf *data, int *width);
-void 					pow_five_calc(char *big_five, int power, int j);
-void 					pow_five_sum(char *big_five, char *big_num, int i, int j);
-int  					count_start(char *big_five, char *big_num, int power);
-void					add_pow_five(char big_num[NUM_SIZE], int power);
-void					pow_two_under_64(int power, char *big_num);
-void					array_sum(char *big_two, char *big_num, int j);
-void					array_power(int power, char *big_two, int i);
-void 					pow_two_over_64(char *big_num, char *big_two, int power);
-void					add_pow_two(char big_num[NUM_SIZE], int power);
 int						put_data_r(t_printf *data, int *k);
 int						manage_color(t_printf *data, int *k);
 void					move_str(char *str, char *s, int *i);
+void					add_pow_five(char big_num[NUM_SIZE], int power);
+void					add_pow_two(char big_num[NUM_SIZE], int power);
+void					ft_fill(t_printf *data, char *big_num1, char *big_num2, int k);
+
 #endif
