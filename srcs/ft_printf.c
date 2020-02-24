@@ -12,12 +12,13 @@
 
 #include "ft_printf.h"
 
-t_printf		*init_data(const char *format)
+t_printf		*init_data(const char *format, int *a)
 {
 	t_printf	*data;
 	int			i;
 
 	i = 0;
+	*a = 0;
 	if (!(data = (t_printf *)malloc(sizeof(t_printf))))
 		return (NULL);
 	data->format = (char *)format;
@@ -54,14 +55,14 @@ int				ft_printf(const char *format, ...)
 	t_printf	*data;
 	int			i;
 
-	if (!(data = init_data(format)))
+	if (!(data = init_data(format, &i)))
 		return (0);
-	i = 0;
 	va_start(data->params, format);
 	while (data->format[i])
 	{
-		if (data->format[i++] == '%')
+		if (data->format[i] == '%')
 		{
+			i++;
 			reinit_data(data);
 			if (data->format[i] == '\0' || manage_var(data, &i))
 				break ;

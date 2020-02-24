@@ -91,13 +91,20 @@ BOLD_MAGENTA = \033[1;35m
 CYAN = \033[0;36m
 BOLD_CYAN = \033[1;36m
 RESET = \033[0m
+CLEAR_LINE = \033[2K
+BEGIN_LINE = \033[A
+
+PWD = $(shell pwd)
+
+TOTAL_FILES := $(shell echo $(SOURCES_LIST) | wc -w | sed -e 's/ //g')
+CURRENT_FILES = $(shell find $(PWD)/objects/ -type f | wc -l | sed -e 's/ //g')
 
 all: $(NAME)
 
 $(NAME): $(OBJECTS_DIRECTORY) $(OBJECTS)
 		@ar rc $(NAME) $(OBJECTS)
 		@ranlib $(NAME)
-		@echo "\n$(BOLD_YELLOW)$(NAME)$(RESET):$(BOLD_BLUE) ready to use!$(RESET)"
+		@echo "\n$(CLEAR_LINE)$(BOLD_YELLOW)$(NAME)$(RESET):$(BOLD_BLUE) ready to use!$(RESET)"
 
 $(OBJECTS_DIRECTORY):
 	@mkdir -p $(OBJECTS_DIRECTORY)
@@ -105,7 +112,7 @@ $(OBJECTS_DIRECTORY):
 
 $(OBJECTS_DIRECTORY)%.o : $(SOURCES_DIRECTORY)%.c $(HEADERS)
 	@gcc $(FLAGS) -I $(HEADERS_DIRECTORY) $< -o $@
-	@echo "$(GREEN).$(RESET)\c"
+	@echo "$(CLEAR_LINE)$(GREEN)Compiling file [$(CYAN)$<$(GREEN)]. ($(CURRENT_FILES) / $(TOTAL_FILES))$(RESET)$(BEGIN_LINE)"
 
 
 

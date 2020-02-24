@@ -6,7 +6,7 @@
 /*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 17:12:21 by ffood             #+#    #+#             */
-/*   Updated: 2020/02/24 17:13:16 by ffood            ###   ########.fr       */
+/*   Updated: 2020/02/24 17:54:58 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,13 @@ void			help_manage_var(t_printf *data, int *k)
 		i = 0;
 		if (data->format[*k] == '%' && (*k)++)
 			return (ft_put_percent(data));
-		if (manage_flags(data, k) == 0 || manage_width(data, k) == 0
-		|| manage_precision(data, k) == 0 || manage_size(data, k) == 0)
+		if (manage_flags(data, k) == 0)
+			i = 1;
+		if (manage_width(data, k) == 0)
+			i = 1;
+		if (manage_precision(data, k) == 0)
+			i = 1;
+		if (manage_size(data, k) == 0)
 			i = 1;
 		if (!ft_is_flag(data->format[*k])
 		&& !ft_is_size(data->format[*k]) && !ft_isdigit(data->format[*k])

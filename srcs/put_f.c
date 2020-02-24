@@ -45,7 +45,9 @@ static void	rounding_off(char *big_num1, char *big_num2, t_printf *data)
 	{
 		if (big_num2[i] + 1 > 9)
 			flag = 1;
-		big_num2[i]++;
+		if (!(big_num2[i] == 2 && big_num2[i + 1] == 5
+		&& big_num2[i + 2] == -1))
+			big_num2[i]++;
 	}
 	while (flag && i)
 	{
