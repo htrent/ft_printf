@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   put_s.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/24 16:53:00 by ffood            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ int				put_data_s(t_printf *data, int *k)
 	if (!(buf = ft_strnew(init_s(data, &prec, &n, s))))
 		return (1);
 	i = 0;
-	((data->flags >> TO_MINUS) % 2) ? help1_s(buf, &prec, &i, s) : help3_s(data, n, &i, buf);
-	((data->flags >> TO_MINUS) % 2) ? help2_s(data, n, &i, buf) : help1_s(buf, &prec, &i, s);
+	((data->flags >> TO_MINUS) % 2) ? help1_s(buf, &prec, &i, s)
+	: help3_s(data, n, &i, buf);
+	((data->flags >> TO_MINUS) % 2) ? help2_s(data, n, &i, buf)
+	: help1_s(buf, &prec, &i, s);
 	ft_putstr_buf(buf, data->buf, data);
 	(*k)++;
 	return (0);

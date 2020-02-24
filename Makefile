@@ -6,7 +6,7 @@
 #    By: ffood <ffood@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/06 18:03:43 by htrent            #+#    #+#              #
-#    Updated: 2020/02/24 15:32:34 by ffood            ###   ########.fr        #
+#    Updated: 2020/02/24 17:12:55 by ffood            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME = libftprintf.a
 
-FLAGS = -Wall -Werror -Wextra -c -g
+FLAGS = -Wall -Werror -Wextra -c -g -O2
 
 HEADERS_LIST = ft_printf.h
 HEADERS_DIRECTORY = ./includes/
@@ -68,7 +68,8 @@ SOURCES_LIST = ft_atoi.c \
 	   color.c \
 	   help_utils_p.c \
 	   power_two.c \
-	   float_fill.c
+	   float_fill.c \
+	   put_data.c
 	   
 SOURCES = $(addprefix $(SOURCES_DIRECTORY), $(SOURCES_LIST))
 

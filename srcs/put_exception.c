@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   put_exception.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 16:58:37 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/08 17:20:37 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/24 17:10:34 by ffood            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_put_percent(t_printf *data)
+void	ft_put_percent(t_printf *data)
 {
 	ft_putchar_buf('%', data->buf, data);
 	data->count_char++;
-	return (0);
 }
 
 int		put_data_exception(t_printf *data, int *k)

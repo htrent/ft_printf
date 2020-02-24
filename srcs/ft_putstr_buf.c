@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_buf.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/08 15:55:17 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/24 15:48:38 by ffood            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,7 @@ void	ft_putstr_pft(char buf[BUFF_SIZE], t_printf *data)
 	int i;
 
 	i = 0;
-	while (i < data->count_buf)
-	{
-		ft_putchar(buf[i]);
-		i++;
-	}
+	write(1, buf, data->count_buf);
 	data->count_buf = 0;
 }
 

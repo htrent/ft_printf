@@ -6,11 +6,7 @@
 /*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:54 by htrent            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2020/02/24 14:14:41 by ffood            ###   ########.fr       */
-=======
-/*   Updated: 2020/02/22 16:04:15 by ffood            ###   ########.fr       */
->>>>>>> 043b5f5308fe76cc910d9c5f37e2fbcf1d8d7721
+/*   Updated: 2020/02/24 17:10:53 by ffood            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +40,10 @@
 # define TO_SPACE	4
 
 # define NO_SIZE		0
-# define L_SIZE			1
+# define HH_SIZE		1
 # define H_SIZE			2
-# define LL_SIZE		3
-# define HH_SIZE		4
+# define L_SIZE			3
+# define LL_SIZE		4
 # define L_UPPER_SIZE	5
 # define J_SIZE			6
 # define Z_SIZE			7
@@ -130,7 +126,7 @@ int 					put_data_ouxb(t_printf *data, int *k);
 char					*ft_fillbegin_x(t_printf *data, char *str, char *num);
 char					*ft_fillend_x(t_printf *data, char *str, char *num);
 int						put_data_zero(t_printf *data, int *k);
-int						ft_put_percent(t_printf *data);
+void					ft_put_percent(t_printf *data);
 int						put_data_exception(t_printf *data, int *k);
 void					ft_fillbegin(t_printf *data, intmax_t num, char *s, int digits);
 void					ft_fillend(t_printf *data, intmax_t num, char *s, int digits);

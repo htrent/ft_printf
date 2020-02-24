@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_di.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ffood <ffood@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:46 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/14 15:06:22 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/24 16:53:14 by ffood            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int				put_data_di(t_printf *data, int *k)
 	data->count_char += n;
 	if (!(s = ft_strnew(n)))
 		return (1);
-	((data->flags >> TO_MINUS) % 2) ? ft_fillbegin(data, num, s, digits) : ft_fillend(data, num, s, digits);
+	((data->flags >> TO_MINUS) % 2) ? ft_fillbegin(data, num, s, digits)
+	: ft_fillend(data, num, s, digits);
 	(*k)++;
 	return (0);
 }
