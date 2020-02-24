@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/04 11:53:46 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/14 15:06:22 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,9 @@ int				put_data_di(t_printf *data, int *k)
 		n++;
 	n = (n > data->width) ? n : data->width;
 	data->count_char += n;
-	s = ft_strnew(n);
-	if ((data->flags >> TO_MINUS) % 2)
-		ft_fillbegin(data, num, s, digits);
-	else
-		ft_fillend(data, num, s, digits);
+	if (!(s = ft_strnew(n)))
+		return (1);
+	((data->flags >> TO_MINUS) % 2) ? ft_fillbegin(data, num, s, digits) : ft_fillend(data, num, s, digits);
 	(*k)++;
 	return (0);
 }

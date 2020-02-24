@@ -14,7 +14,7 @@
 
 int			edge_di(t_printf *data, int *k)
 {
-	ft_putstr_buf("-9223372036854775808", data->buf, data);
+	ft_putstr_buf(ft_strdup("-9223372036854775808"), data->buf, data);
 	data->count_char += 20;
 	(*k)++;
 	return (0);

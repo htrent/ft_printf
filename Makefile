@@ -6,7 +6,7 @@
 #    By: ffood <ffood@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/06 18:03:43 by htrent            #+#    #+#              #
-#    Updated: 2020/02/24 14:13:14 by ffood            ###   ########.fr        #
+#    Updated: 2020/02/24 15:32:34 by ffood            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 
 NAME = libftprintf.a
 
-FLAGS = -Wall -Werror -Wextra -c
+FLAGS = -Wall -Werror -Wextra -c -g
 
 HEADERS_LIST = ft_printf.h
 HEADERS_DIRECTORY = ./includes/

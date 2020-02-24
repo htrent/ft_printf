@@ -32,18 +32,18 @@ void	ft_putstr_buf(char *str, char buf[BUFF_SIZE], t_printf *data)
 
 	j = 0;
 	i = 0;
-	while (i < data->count_buf && i < BUFF_SIZE - 1)
+	while (i < data->count_buf)
 		i++;
 	while (str[j])
 	{
-		while (i < BUFF_SIZE - 1 && str[j])
+		while (i < BUFF_SIZE && str[j])
 		{
 			buf[i] = str[j];
 			j++;
 			i++;
 			data->count_buf++;
 		}
-		if (i == BUFF_SIZE - 1)
+		if (i == BUFF_SIZE)
 		{
 			ft_putstr_pft(buf, data);
 			ft_bzero(buf, BUFF_SIZE);

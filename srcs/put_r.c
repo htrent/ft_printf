@@ -6,7 +6,7 @@
 /*   By: htrent <htrent@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/11 15:22:11 by htrent            #+#    #+#             */
-/*   Updated: 2020/02/12 20:44:00 by htrent           ###   ########.fr       */
+/*   Updated: 2020/02/14 16:34:45 by htrent           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int			count_nonprint(char *s, int *a, int *b)
 	}
 	*a = 0;
 	*b = 0;
-	return (count + 1 + i);
+	return (count + 2 + i);
 }
 
 static void			paste_nonprint(char *s, char c, int *j)

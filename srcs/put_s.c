@@ -23,18 +23,11 @@ int				put_data_s(t_printf *data, int *k)
 	s = (char *)va_arg(data->params, char *);
 	if (s == NULL)
 		return (put_data_s_null(data, k));
-	buf = ft_strnew(init_s(data, &prec, &n, s));
+	if (!(buf = ft_strnew(init_s(data, &prec, &n, s))))
+		return (1);
 	i = 0;
-	if ((data->flags >> TO_MINUS) % 2)
-	{
-		help1_s(buf, &prec, &i, s);
-		help2_s(data, n, &i, buf);
-	}
-	else
-	{
-		help3_s(data, n, &i, buf);
-		help1_s(buf, &prec, &i, s);
-	}
+	((data->flags >> TO_MINUS) % 2) ? help1_s(buf, &prec, &i, s) : help3_s(data, n, &i, buf);
+	((data->flags >> TO_MINUS) % 2) ? help2_s(data, n, &i, buf) : help1_s(buf, &prec, &i, s);
 	ft_putstr_buf(buf, data->buf, data);
 	(*k)++;
 	return (0);
